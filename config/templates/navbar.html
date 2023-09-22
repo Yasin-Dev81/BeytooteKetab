@@ -21,11 +21,11 @@
                 <a class="header__nav-link" href="{% url 'book:home' %}">خانه</a>
                 </li>
                 <li class="header__nav-item">
-                <a class="header__nav-link" href="#" role="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">دسته بندی ها</a>
+                <a class="header__nav-link" href="#" role="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">کتاب ها</a>
 
                 <ul class="dropdown-menu header__nav-menu" aria-labelledby="dropdownMenu1">
-                    <li><a href="catalog.html">دسته ها</a></li>
-                    <li><a href="details.html">جزئیات</a></li>
+                    <li><a href="{% url 'book:book_list' %}">همه‌ی کتاب‌ها</a></li>
+                    <li><a href="{% url 'accounts:user_favorites' %}">کتاب‌های نشان شده</a></li>
                 </ul>
                 </li>
                 <li class="header__nav-item">

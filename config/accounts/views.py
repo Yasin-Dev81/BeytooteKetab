@@ -159,6 +159,7 @@ class AddFavoritesView(LoginRequiredMixin, View):
 
     def setup(self, request, *args, **kwargs):
         self.user_fav = request.user.favorites
+        self.referring_page = request.GET.get('referring_page', '/')
 
         return super().setup(request, *args, **kwargs)
 
@@ -166,14 +167,14 @@ class AddFavoritesView(LoginRequiredMixin, View):
         in_favorites_list = self.user_fav.filter(pk=pk).exists()
         if in_favorites_list:
             messages.warning(request, 'کتاب قبلا به لیست اضافه شده است', 'danger')
-            return redirect('accounts:user_favorites')
+            return redirect(self.referring_page)
 
         book = get_object_or_404(Book, pk=pk)
         self.user_fav.add(book)
         # self.user_fav.save()
 
         messages.success(request, 'کتاب با موفقیت به لیست اضافه شد', 'success')
-        return redirect('accounts:user_favorites')
+        return redirect(self.referring_page)
 
 
 class RemoveFavoritesView(LoginRequiredMixin, View):

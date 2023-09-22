@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'book.apps.BookConfig',
 
     # third-party app
-    'ckeditor'
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
