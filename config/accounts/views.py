@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 # from .forms import UserRegistrationForm, VerifyCodeForm, UserLoginForm, UserPasswordResetForm
 from . import forms
+from book.models import Book
 import random
 from utils import send_otp_code
 from .models import OtpCode, User
@@ -125,7 +126,7 @@ class UserPasswordResetVerifyCodeView(View):
     def get(self, request):
         form = self.form_class
         user_session = request.session['user_password_reset_info']
-        return render(request, self.template_name, {'form': form, 'phone_number':user_session['phone_number']})
+        return render(request, self.template_name, {'form': form, 'phone_number': user_session['phone_number']})
 
     def post(self, request):
         user_session = request.session['user_password_reset_info']
@@ -145,3 +146,53 @@ class UserPasswordResetVerifyCodeView(View):
                 messages.error(request, 'کد وارد شده صحیح نمی‌باشد', 'danger')
                 return redirect('accounts:forgot_password')
         return render(request, self.template_name, {'form': form})
+
+
+class UserFavoritesView(LoginRequiredMixin, View):
+
+    def get(self, request):
+        favorites_list = self.request.user.favorites.all()
+        # print(favorites_list)
+        return render(request, 'accounts/favorites.html', {'favorites_list': favorites_list})
+
+
+class AddFavoritesView(LoginRequiredMixin, View):
+
+    def setup(self, request, *args, **kwargs):
+        self.user_fav = request.user.favorites
+
+        return super().setup(request, *args, **kwargs)
+
+    def get(self, request, pk):
+        in_favorites_list = self.user_fav.filter(pk=pk).exists()
+        if in_favorites_list:
+            messages.warning(request, 'کتاب قبلا به لیست اضافه شده است', 'danger')
+            return redirect('book:home')
+
+        book = get_object_or_404(Book, pk=pk)
+        self.user_fav.add(book)
+        # self.user_fav.save()
+
+        return redirect('accounts:user_favorites')
+
+
+class RemoveFavoritesView(LoginRequiredMixin, View):
+
+    def setup(self, request, *args, **kwargs):
+        self.user_fav = request.user.favorites
+
+        return super().setup(request, *args, **kwargs)
+
+    def get(self, request, pk):
+        in_favorites_list = self.user_fav.filter(pk=pk).exists()
+        if not in_favorites_list:
+            messages.warning(request, 'کتاب در لیست نیست', 'danger')
+            return redirect('book:home')
+
+        book = get_object_or_404(Book, pk=pk)
+        self.user_fav.remove(book)
+        # self.user_fav.save()
+
+        return redirect('accounts:user_favorites')
+
+

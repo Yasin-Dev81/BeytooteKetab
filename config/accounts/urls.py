@@ -1,7 +1,14 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 app_name = 'accounts'
+
+favorites_url = [
+    path('list/', views.UserFavoritesView.as_view(), name='user_favorites'),
+    path('add/<int:pk>/', views.AddFavoritesView.as_view(), name='add_favorites'),
+    path('remove/<int:pk>/', views.RemoveFavoritesView.as_view(), name='remove_favorites')
+]
+
 urlpatterns = [
     path('register/', views.UserRegisterView.as_view(), name='user_register'),
     path('verify/', views.UserRegisterVerifyCodeView.as_view(), name='verify_code'),
@@ -9,4 +16,5 @@ urlpatterns = [
     path('logout/', views.UserLogoutView.as_view(), name='user_logout'),
     path('forgot/', views.UserPasswordResetView.as_view(), name='forgot_password'),
     path('forgot/verify/', views.UserPasswordResetVerifyCodeView.as_view(), name='forgot_password_verify'),
+    path('favorites/', include(favorites_url)),
 ]

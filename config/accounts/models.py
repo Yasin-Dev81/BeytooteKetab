@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from .managers import UserManager
+from django.contrib.auth import get_user_model
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -12,6 +13,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_premium = models.BooleanField(default=False)
+
+    favorites = models.ManyToManyField('book.Book', related_name='favorites')
 
     objects = UserManager()
 
@@ -37,3 +40,4 @@ class OtpCode(models.Model):
 
     def __str__(self):
         return f'{self.phone_number} - {self.code} - {self.created}'
+

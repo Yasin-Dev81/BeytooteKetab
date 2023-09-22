@@ -21,6 +21,7 @@ class UserAdmin(BaseUserAdmin):
         ('Main', {'fields': ('email', 'phone_number', 'full_name', 'password')}),
         ('Permissions',
          {'fields': ('is_active', 'is_admin', 'is_superuser', 'last_login', 'groups', 'user_permissions')}),
+        ('Favorites', {'fields': ('favorites',)},),
     )
 
     add_fieldsets = (
@@ -30,6 +31,10 @@ class UserAdmin(BaseUserAdmin):
     search_fields = ('email', 'full_name')
     ordering = ('full_name',)
     filter_horizontal = ('groups', 'user_permissions')
+
+    raw_id_fields = [
+        'favorites'
+    ]
 
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
