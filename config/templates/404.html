@@ -1,0 +1,62 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html dir="rtl" lang="fa-IR">
+
+
+    <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+	<link rel="stylesheet" href="{% static 'css/nouislider.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/jquery.mCustomScrollbar.min.css' %}">
+	
+	<link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+	<!-- Favicons -->
+	<link rel="icon" type="image/png" href="{% static 'icon/favicon-32x32.png' %}" sizes="32x32">
+	<link rel="apple-touch-icon" href="{% static 'icon/favicon-32x32.png' %}">
+
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	
+	<title>بوکینو</title>
+
+    </head>
+    <body>
+	<!-- page 404 -->
+	<div class="page-404 section--full-bg" data-bg="{% static 'img/bg2.jpg' %}">
+	    <div class="container">
+		<div class="row">
+		    <div class="col-12">
+			<div class="page-404__wrap">
+			    <div class="page-404__content">
+				<h1 class="page-404__title">404</h1>
+				<p class="page-404__text">صفحه مورد نظر شما در دسترس نیست!</p>
+				<a href="{% url 'book:home' %}" class="page-404__btn">بازگشت</a>
+			    </div>
+			</div>
+		    </div>
+		</div>
+	    </div>
+	</div>
+	<!-- end page 404 -->
+
+	<!-- JS -->
+	<script src="{% static 'js/jquery-3.5.0.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+	<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+	<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+	<script src="{% static 'js/wNumb.js' %}"></script>
+	<script src="{% static 'js/nouislider.min.js' %}"></script>
+	<script src="{% static 'js/jquery.mousewheel.min.js' %}"></script>
+	<script src="{% static 'js/jquery.mCustomScrollbar.min.js' %}"></script>
+	<script src="{% static 'js/main.js' %}"></script>
+    </body>
+
+
+</html>
