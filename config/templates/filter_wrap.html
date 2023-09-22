@@ -1,0 +1,98 @@
+{% load static %}
+
+<div class="col-12 col-lg-20">
+    <div class="row">
+        <div class="col-12">
+        <!-- filter -->
+        <div class="filter">
+            <h4 class="filter__title">فیلتر ها <button type="button">خذف</button></h4>
+
+            <div class="filter__group">
+            <label class="filter__label">کلمه کلیدی
+                :</label>
+            <input type="text" class="filter__input" placeholder="کلمه">
+            </div>
+
+            <div class="filter__group">
+            <label for="sort" class="filter__label">مرتب سازی :</label>
+
+            <div class="filter__select-wrap">
+                <select name="sort" id="sort" class="filter__select">
+                <option value="0">مرتبط</option>
+                <option value="1">جدیدترین</option>
+                <option value="2">قدیمی ترین</option>
+                </select>
+            </div>
+            </div>
+
+            <div class="filter__group">
+            <label class="filter__label">قیمت :</label>
+
+            <div class="filter__range">
+                <div id="filter__range-start"></div>
+                <div id="filter__range-end"></div>
+            </div>
+
+            <div id="filter__range"></div>
+            </div>
+
+            <div class="filter__group">
+            <label class="filter__label">پلتفرم ها :</label>
+            <ul class="filter__checkboxes">
+                <li>
+                <input id="type1" type="checkbox" name="type1" checked="">
+                <label for="type1">پلی استیشن</label>
+                </li>
+                <li>
+                <input id="type2" type="checkbox" name="type2">
+                <label for="type2">ایکس باکس</label>
+                </li>
+                <li>
+                <input id="type3" type="checkbox" name="type3">
+                <label for="type3">ویندوز</label>
+                </li>
+                <li>
+                <input id="type4" type="checkbox" name="type4">
+                <label for="type4">مک</label>
+                </li>
+            </ul>
+            </div>
+
+            <div class="filter__group">
+            <label class="filter__label">ژانر ها :</label>
+            <ul class="filter__checkboxes">
+                <li>
+                <input id="type5" type="checkbox" name="type5" checked="">
+                <label for="type5">اکشن</label>
+                </li>
+                <li>
+                <input id="type6" type="checkbox" name="type6">
+                <label for="type6">ماجرا جویی</label>
+                </li>
+                <li>
+                <input id="type7" type="checkbox" name="type7" checked="">
+                <label for="type7">ترسناک</label>
+                </li>
+                <li>
+                <input id="type8" type="checkbox" name="type8" checked="">
+                <label for="type8">ورزشی</label>
+                </li>
+                <li>
+                <input id="type9" type="checkbox" name="type9">
+                <label for="type9">جنگی</label>
+                </li>
+                <li>
+                <input id="type10" type="checkbox" name="type10">
+                <label for="type10">مهیج</label>
+                </li>
+            </ul>
+            </div>
+
+            <div class="filter__group">
+            <button class="filter__btn" type="button">اعمال فیلتر</button>
+            </div>
+        </div>
+        <!-- end filter -->
+        </div>
+    </div>
+</div>
