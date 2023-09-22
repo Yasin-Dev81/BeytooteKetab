@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
-# from .forms import UserRegistrationForm, VerifyCodeForm, UserLoginForm, UserPasswordResetForm
 from . import forms
 from book.models import Book
 import random
@@ -61,8 +60,8 @@ class UserRegisterVerifyCodeView(View):
                 )
 
                 code_instance.delete()
-                messages.success(request, 'you registered.', 'success')
-                return redirect('book:home')
+                messages.success(request, 'اکانت با موفقیت ساخته شد', 'success')
+                return redirect('accounts:user_login')
             else:
                 messages.error(request, 'this code is wrong', 'danger')
                 return redirect('accounts:verify_code')
@@ -167,12 +166,13 @@ class AddFavoritesView(LoginRequiredMixin, View):
         in_favorites_list = self.user_fav.filter(pk=pk).exists()
         if in_favorites_list:
             messages.warning(request, 'کتاب قبلا به لیست اضافه شده است', 'danger')
-            return redirect('book:home')
+            return redirect('accounts:user_favorites')
 
         book = get_object_or_404(Book, pk=pk)
         self.user_fav.add(book)
         # self.user_fav.save()
 
+        messages.success(request, 'کتاب با موفقیت به لیست اضافه شد', 'success')
         return redirect('accounts:user_favorites')
 
 
@@ -187,12 +187,36 @@ class RemoveFavoritesView(LoginRequiredMixin, View):
         in_favorites_list = self.user_fav.filter(pk=pk).exists()
         if not in_favorites_list:
             messages.warning(request, 'کتاب در لیست نیست', 'danger')
-            return redirect('book:home')
+            return redirect('accounts:user_favorites')
 
         book = get_object_or_404(Book, pk=pk)
         self.user_fav.remove(book)
         # self.user_fav.save()
 
+        messages.success(request, 'کتاب با موفقیت از لیست حذف شد', 'success')
         return redirect('accounts:user_favorites')
 
 
+class EditUserInfoView(LoginRequiredMixin, View):
+    form_class = forms.EditUserInfoForm
+    template_name = 'accounts/edit_info.html'
+
+    def get(self, request):
+        form = self.form_class(
+            data={
+                'phone': request.user.phone_number,
+                'email': request.user.email,
+                'full_name': request.user.full_name
+            },
+            request=request
+        )
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = self.form_class(request.POST, request=request)
+        if form.is_valid():
+            form.save(commit=True)
+
+            messages.success(request, 'اطلاعات با موفقیت آپدیت شد', 'success')
+            return redirect('accounts:user_info_edit')
+        return render(request, self.template_name, {'form': form})

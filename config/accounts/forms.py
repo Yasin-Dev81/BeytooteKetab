@@ -170,3 +170,56 @@ class UserPasswordResetVerifyCodeForm(forms.Form):
             raise ValidationError("پسورد باید حاوی حداقل یک عدد باشد!")
 
         return cd['password2']
+
+
+class EditUserInfoForm(forms.Form):
+    phone = forms.CharField(
+        max_length=11,
+        label="شماره موبایل",
+        help_text="بدون پیش شماره +98 وارد کنید",
+        widget=forms.TextInput(attrs={"class": "sign__input", "placeholder": '09000000000'})
+    )
+    email = forms.EmailField(
+        label="ایمیل",
+        widget=forms.EmailInput(attrs={"class": "sign__input", "placeholder": 'ایمیل'})
+    )
+    full_name = forms.CharField(
+        label='نام و نام خانوادگی',
+        # help_text="نامی مستعار یا دلخواه وارد کنید",
+        widget=forms.TextInput(attrs={"class": "sign__input", "placeholder": 'یاسین خوش منش'})
+    )
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        print('--'*10, self.request)
+        super(EditUserInfoForm, self).__init__(*args, **kwargs)
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if self.request.user.email == email:
+            return email
+
+        user = User.objects.filter(email=email).exists()
+        if user:
+            raise ValidationError('این ایمیل قبلا ثبت شده است!')
+        return email
+
+    def clean_phone(self):
+        phone = self.cleaned_data['phone']
+        if self.request.user.phone_number == phone:
+            return phone
+
+        user = User.objects.filter(phone_number=phone).exists()
+        if user:
+            raise ValidationError('اکانتی با این شماره وجود دارد!')
+        OtpCode.objects.filter(phone_number=phone).delete()
+        return phone
+
+    def save(self, commit=True):
+        cd = self.cleaned_data
+        self.request.user.phone_number = cd['phone']
+        self.request.user.email = cd['email']
+        self.request.user.full_name = cd['full_name']
+        if commit:
+            self.request.user.save()
+        return self.request.user

@@ -4,9 +4,13 @@ from . import views
 app_name = 'accounts'
 
 favorites_url = [
-    path('list/', views.UserFavoritesView.as_view(), name='user_favorites'),
+    path('', views.UserFavoritesView.as_view(), name='user_favorites'),
     path('add/<int:pk>/', views.AddFavoritesView.as_view(), name='add_favorites'),
     path('remove/<int:pk>/', views.RemoveFavoritesView.as_view(), name='remove_favorites')
+]
+
+info_url = [
+    path('edit/', views.EditUserInfoView.as_view(), name='user_info_edit')
 ]
 
 urlpatterns = [
@@ -16,5 +20,7 @@ urlpatterns = [
     path('logout/', views.UserLogoutView.as_view(), name='user_logout'),
     path('forgot/', views.UserPasswordResetView.as_view(), name='forgot_password'),
     path('forgot/verify/', views.UserPasswordResetVerifyCodeView.as_view(), name='forgot_password_verify'),
+
+    path('info/', include(info_url)),
     path('favorites/', include(favorites_url)),
 ]
