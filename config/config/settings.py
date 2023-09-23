@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'book.apps.BookConfig',
     'blog.apps.BlogConfig',
+    'home.apps.HomeConfig',
 
     # third-party app
     'ckeditor',

@@ -12,13 +12,13 @@
                 <span></span>
             </button>
 
-            <a href="{% url 'book:home' %}" class="header__logo">
+            <a href="{% url 'home:home' %}" class="header__logo">
                 <img src="{% static 'img/logo.svg' %}" alt="">
             </a>
 
             <ul class="header__nav">
                 <li class="header__nav-item">
-                <a class="header__nav-link" href="{% url 'book:home' %}">خانه</a>
+                <a class="header__nav-link" href="{% url 'home:home' %}">خانه</a>
                 </li>
                 <li class="header__nav-item">
                 <a class="header__nav-link" href="#" role="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">کتاب ها</a>
@@ -32,7 +32,7 @@
                     <a class="header__nav-link" href="{% url 'blog:blog_list' %}">بلاگ</a>
                 </li>
                 <li class="header__nav-item">
-                <a class="header__nav-link" href="faq.html">مرکز راهنما</a>
+                <a class="header__nav-link" href="{% url 'home:faq' %}">مرکز راهنما</a>
                 </li>
                 <li class="header__nav-item">
                 <a class="header__nav-link" href="#" role="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -42,13 +42,13 @@
                 <ul class="dropdown-menu header__nav-menu header__nav-menu--scroll" aria-labelledby="dropdownMenu3">
                     <li><a href="checkout.html">ثبت نهایی</a></li>
                     <li><a href="{% url 'accounts:user_favorites' %}">نشان ها</a></li>
-                    <li><a href="about.html">درباره ما</a></li>
+                    <li><a href="{% url 'home:about' %}">درباره ما</a></li>
                     <li><a href="profile.html">پروفایل</a></li>
                     <li><a href="signin.html">ورود اعضا</a></li>
                     <li><a href="signup.html">ثبت نام</a></li>
                     <li><a href="forgot.html">فراموشی رمز عبور</a></li>
-                    <li><a href="privacy.html">حریم خصوصی</a></li>
-                    <li><a href="contacts.html">تماس با ما</a></li>
+                    <li><a href="{% url 'home:privacy' %}">حریم خصوصی</a></li>
+                    <li><a href="{% url 'home:contact' %}">تماس با ما</a></li>
                     <li><a href="404.html">صفحه 404</a></li>
                 </ul>
             </ul>

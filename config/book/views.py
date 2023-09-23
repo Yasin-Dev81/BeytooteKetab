@@ -10,26 +10,6 @@ from .models import Book, Category, BookComment
 from .forms import BookCommentForm
 
 
-class HomeView(View):
-    template_name = 'book/home.html'
-    counte_each = 4
-
-    def setup(self, request, *args, **kwargs):
-        self.best_books = sorted(Book.objects.all(), key=lambda t: int(t.like_count)*(-1))[:self.counte_each]
-        self.last_books = Book.objects.all().order_by('-datetime_created')[:self.counte_each*2]
-        return super().setup(request, *args, **kwargs)
-
-    def get(self, request):
-        return render(
-            request,
-            self.template_name,
-            context={
-                'best_book': self.best_books,
-                'last_book': self.last_books
-            }
-        )
-
-
 class BookDetailView(View):
     model = Book
     template_name = 'book/detail.html'
