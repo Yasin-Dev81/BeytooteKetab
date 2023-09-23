@@ -18,4 +18,18 @@ class BlogCommentForm(forms.Form):
         )
         if commit:
             comment.save()
-        return comment
+        return cd
+
+
+class EmailForm(forms.Form):
+    email = forms.EmailField(
+        label="ایمیل",
+        widget=forms.EmailInput(attrs={"class": "form__input", "type": "text", "placeholder": "ایمیل"})
+    )
+
+    def save(self, user, commit=True):
+        cd = self.cleaned_data
+        user.email = cd["email"]
+        if commit:
+            user.save()
+        return cd

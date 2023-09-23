@@ -7,7 +7,7 @@ from django.utils.decorators import method_decorator
 from django.contrib import messages
 
 from .models import Blog, BlogCategory
-from .forms import BlogCommentForm
+from .forms import BlogCommentForm, EmailForm
 from book.models import Book
 
 
@@ -19,7 +19,8 @@ class BlogListView(generic.ListView):
 class BlogDetailView(View):
     model = Blog
     template_name = 'blog/blog_detail.html'
-    from_class = BlogCommentForm
+    comment_form_class = BlogCommentForm
+    email_form_class = EmailForm
 
     def setup(self, request, *args, **kwargs):
         self.blog = get_object_or_404(self.model, pk=kwargs.get('pk'))
@@ -34,22 +35,35 @@ class BlogDetailView(View):
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        form = self.from_class
+        email_form = self.email_form_class
+        if request.user.is_authenticated:
+            email_form = email_form(data={"email": request.user.email})
         return render(
             request,
             self.template_name,
-            {"blog": self.blog, "comments": self.comments, "form": form, "category": self.category, "book": self.book}
+            {
+                "blog": self.blog, "comments": self.comments, "comment_form": self.comment_form_class,
+                "category": self.category, "book": self.book, "email_form": email_form
+            }
         )
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
-        form = self.from_class(request.POST)
-        if form.is_valid():
-            form.save(commit=True, blog=self.blog, user=request.user)
+        comment_form = self.comment_form_class(request.POST)
+        email_form = self.email_form_class(request.POST)
+        if comment_form.is_valid():
+            comment_form.save(commit=True, blog=self.blog, user=request.user)
             messages.success(request, 'نظر شما با موفقیت ثبت شد', 'success')
             return redirect(reverse('blog:blog_detail', args=(self.kwargs['pk'], self.kwargs['slug'], )))
+        if email_form.is_valid():
+            email_form.save(commit=True, user=request.user)
+            messages.success(request, 'ایمیل شما با موفقیت ثبت شد', 'success')
+            return redirect(reverse('blog:blog_detail', args=(self.kwargs['pk'], self.kwargs['slug'],)))
         return render(
             request,
             self.template_name,
-            {'blog': self.book, 'comments': self.comments, 'form': form, "category": self.category, "book": self.book}
+            {
+                "blog": self.blog, "comments": self.comments, "comment_form": comment_form,
+                "category": self.category, "book": self.book, "email_form": email_form
+            }
         )
