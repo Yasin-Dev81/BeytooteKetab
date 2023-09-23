@@ -1,6 +1,10 @@
 {% extends '_base.html' %}
 {% load static %}
 
+{% block title_content %}
+    کتاب‌ها
+{% endblock %}
+
 {% block content %}
 
 <!-- page title -->
@@ -15,7 +19,7 @@
 
             <!-- breadcrumb -->
             <ul class="breadcrumb">
-            <li class="breadcrumb__item"><a href="index.html">خانه</a></li>
+            <li class="breadcrumb__item"><a href="{% url 'book:home' %}">خانه</a></li>
             <li class="breadcrumb__item breadcrumb__item--active">کتاب ها</li>
             </ul>
             <!-- end breadcrumb -->
@@ -58,17 +62,6 @@
                 </div>
 
                 <div class="filter__group">
-                <label class="filter__label">قیمت :</label>
-
-                <div class="filter__range">
-                    <div id="filter__range-start"></div>
-                    <div id="filter__range-end"></div>
-                </div>
-
-                <div id="filter__range"></div>
-                </div>
-
-                <div class="filter__group">
                 <label class="filter__label">پلتفرم ها :</label>
                 <ul class="filter__checkboxes">
                     <li>
@@ -92,32 +85,14 @@
 
                 <div class="filter__group">
                 <label class="filter__label">ژانر ها :</label>
-                <ul class="filter__checkboxes">
-                    <li>
-                    <input id="type5" type="checkbox" name="type5" checked="">
-                    <label for="type5">اکشن</label>
-                    </li>
-                    <li>
-                    <input id="type6" type="checkbox" name="type6">
-                    <label for="type6">ماجرا جویی</label>
-                    </li>
-                    <li>
-                    <input id="type7" type="checkbox" name="type7" checked="">
-                    <label for="type7">ترسناک</label>
-                    </li>
-                    <li>
-                    <input id="type8" type="checkbox" name="type8" checked="">
-                    <label for="type8">ورزشی</label>
-                    </li>
-                    <li>
-                    <input id="type9" type="checkbox" name="type9">
-                    <label for="type9">جنگی</label>
-                    </li>
-                    <li>
-                    <input id="type10" type="checkbox" name="type10">
-                    <label for="type10">مهیج</label>
-                    </li>
-                </ul>
+                    <ul class="filter__checkboxes">
+                        {% for obj in category_list %}
+                            <li>
+                            <input id="{{ obj.slug }}" type="checkbox" name="{{ obj.slug }}" checked="checked">
+                            <label for="{{ obj.slug }}">{{ obj.name }}</label>
+                            </li>
+                        {% endfor %}
+                    </ul>
                 </div>
 
                 <div class="filter__group">
@@ -149,7 +124,7 @@
                 </ul>
 
                 <div class="card__title">
-                <h3><a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a></h3>
+                <h3 dir="auto"><a href="{{ obj.get_absolute_url }}">{{ obj.title | capfirst }}</a></h3>
                 <span>5000 تومان</span>
                 </div>
 
@@ -190,7 +165,7 @@
                     {% if page_obj.has_next %}
                         <li class="paginator__item"><a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a></li>
                         <li class="paginator__item paginator__item--next">
-                            <a href="#">
+                            <a href="?page={{ page_obj.next_page_number }}">
                             <svg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 512 512'><polyline points='244 400 100 256 244 112' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:48px'/><line x1='120' y1='256' x2='412' y2='256' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:48px'/></svg>
                             </a>
                         </li>
