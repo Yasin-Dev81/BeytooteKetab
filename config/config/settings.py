@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'book.apps.BookConfig',
 
     # third-party app
-    'ckeditor'
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
@@ -135,6 +135,8 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.User'
+LOGIN_URL = '/accounts/login/'
+LOGOUT_REDIRECT_URL = '/'
 
 CKEDITOR_BASEPATH = "static/ckeditor/ckeditor/"
 

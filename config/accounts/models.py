@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from .managers import UserManager
+import datetime
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -11,9 +12,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     # user status
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    is_premium = models.BooleanField(default=False)
 
-    favorites = models.ManyToManyField('book.Book', related_name='favorites')
+    premium_expire_date = models.DateTimeField(blank=True, null=True)
+
+    favorites = models.ManyToManyField('book.Book', related_name='favorites', blank=True)
 
     objects = UserManager()
 
@@ -21,15 +23,17 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['email', 'full_name']
 
     def __str__(self):
-        return self.email
+        return "%s - %s" % (self.phone_number, self.full_name, )
 
     @property
     def is_staff(self):
         return self.is_admin
 
     @property
-    def is_premium(self):
-        return self.is_premium
+    def is_premium(self) -> bool:
+        if not self.premium_expire_date:
+            return False
+        return self.premium_expire_date <= datetime.datetime.now()
 
 
 class OtpCode(models.Model):
@@ -39,4 +43,3 @@ class OtpCode(models.Model):
 
     def __str__(self):
         return f'{self.phone_number} - {self.code} - {self.created}'
-

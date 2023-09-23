@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title_content %}
-نشان ها
+    نشان ها
 {% endblock %}
 
 
@@ -59,11 +59,11 @@
 {#                    </ul>#}
 
                     <div class="card__title">
-                    <h3><a href="details.html">{{ fav.title }}</a></h3>
+                    <h3 dir="auto"><a href="{{ fav.get_absolute_url }}">{{ fav.title }}</a></h3>
                     </div>
 
                     <div class="card__actions">
-                    <button class="card__buy" type="button">مشاهده</button>
+                    <a class="card__buy" type="button" href="{{ fav.get_absolute_url }}">مشاهده</a>
 
                     <a class="card__favorite card__favorite--delete" type="button" href="{% url 'accounts:remove_favorites' fav.pk %}">
                         <svg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 512 512'><path d='M112,112l20,320c.95,18.49,14.4,32,32,32H348c17.67,0,30.87-13.51,32-32l20-320' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'/><line x1='80' y1='112' x2='432' y2='112' style='stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px'/><path d='M192,112V72h0a23.93,23.93,0,0,1,24-24h80a23.93,23.93,0,0,1,24,24h0v40' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'/><line x1='256' y1='176' x2='256' y2='400' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'/><line x1='184' y1='176' x2='192' y2='400' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'/><line x1='328' y1='176' x2='320' y2='400' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'/></svg>

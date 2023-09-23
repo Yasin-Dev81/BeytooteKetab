@@ -1,11 +1,10 @@
 from django.contrib import admin
-from .models import Category, Book
+from .models import Category, Book, Lang, BookComment
 
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = [
-        'pk',
         'name',
     ]
 
@@ -21,6 +20,7 @@ class BookAdmin(admin.ModelAdmin):
         'category',
         'premium_required',
         'datetime_created',
+        'like_count'
     ]
     search_fields = [
         'title'
@@ -35,3 +35,27 @@ class BookAdmin(admin.ModelAdmin):
         'category'
     ]
 
+
+@admin.register(Lang)
+class LangAdmin(admin.ModelAdmin):
+    list_display = ['lang']
+
+
+@admin.register(BookComment)
+class BookCommentAdmin(admin.ModelAdmin):
+    list_display = [
+        'book',
+        'author',
+        'is_pub',
+        'datetime_created'
+    ]
+    search_fields = [
+        'book'
+    ]
+    list_filter = ['datetime_created']
+    ordering = ['datetime_created']
+
+    raw_id_fields = [
+        'book',
+        'author',
+    ]
