@@ -79,8 +79,13 @@ class UserLoginView(View):
     form_class = forms.UserLoginForm
     template_name = 'accounts/login.html'
 
+    def setup(self, request, *args, **kwargs):
+        self.referring_page = request.GET.get('next', '/')
+        return super().setup(request, *args, **kwargs)
+
     def get(self, request):
         form = self.form_class
+        print('-'*10, self.referring_page)
         return render(request, self.template_name, {'form': form})
 
     def post(self, request):
@@ -91,7 +96,7 @@ class UserLoginView(View):
             if user is not None:
                 login(request, user)
                 messages.success(request, 'با موفقیت وارد شدید', 'info')
-                return redirect('book:home')
+                return redirect(self.referring_page)
             messages.error(request, 'شماره تلفن یا پسورد اشتباه است!', 'warning')
         return render(request, self.template_name, {'form': form})
 
@@ -159,7 +164,7 @@ class AddFavoritesView(LoginRequiredMixin, View):
 
     def setup(self, request, *args, **kwargs):
         self.user_fav = request.user.favorites
-        self.referring_page = request.GET.get('referring_page', '/')
+        self.referring_page = request.GET.get('next', '/')
 
         return super().setup(request, *args, **kwargs)
 
@@ -181,6 +186,7 @@ class RemoveFavoritesView(LoginRequiredMixin, View):
 
     def setup(self, request, *args, **kwargs):
         self.user_fav = request.user.favorites
+        self.referring_page = request.GET.get('next', '/')
 
         return super().setup(request, *args, **kwargs)
 
@@ -188,14 +194,14 @@ class RemoveFavoritesView(LoginRequiredMixin, View):
         in_favorites_list = self.user_fav.filter(pk=pk).exists()
         if not in_favorites_list:
             messages.warning(request, 'کتاب در لیست نیست', 'danger')
-            return redirect('accounts:user_favorites')
+            return redirect(self.referring_page)
 
         book = get_object_or_404(Book, pk=pk)
         self.user_fav.remove(book)
         # self.user_fav.save()
 
         messages.success(request, 'کتاب با موفقیت از لیست حذف شد', 'success')
-        return redirect('accounts:user_favorites')
+        return redirect(self.referring_page)
 
 
 class EditUserInfoView(LoginRequiredMixin, View):
