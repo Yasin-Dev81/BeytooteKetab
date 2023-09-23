@@ -29,13 +29,7 @@
                 </ul>
                 </li>
                 <li class="header__nav-item">
-                <a class="header__nav-link" href="#" role="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">بلاگ</a>
-
-                <ul class="dropdown-menu header__nav-menu" aria-labelledby="dropdownMenu2">
-                    <li><a href="news.html">اخبار</a></li>
-                    <li><a href="article.html">مقالات</a></li>
-                    <li><a href="interview.html">مصاحبه ها</a></li>
-                </ul>
+                    <a class="header__nav-link" href="{% url 'blog:blog_list' %}">بلاگ</a>
                 </li>
                 <li class="header__nav-item">
                 <a class="header__nav-link" href="faq.html">مرکز راهنما</a>

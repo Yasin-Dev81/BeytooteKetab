@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # local apps
     'accounts.apps.AccountsConfig',
     'book.apps.BookConfig',
+    'blog.apps.BlogConfig',
 
     # third-party app
     'ckeditor',

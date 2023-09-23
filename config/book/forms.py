@@ -1,5 +1,4 @@
 from django import forms
-import re
 
 from .models import BookComment
 
