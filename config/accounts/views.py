@@ -63,7 +63,7 @@ class UserRegisterVerifyCodeView(View):
                 messages.success(request, 'اکانت با موفقیت ساخته شد', 'success')
                 return redirect('accounts:user_login')
             else:
-                messages.error(request, 'this code is wrong', 'danger')
+                messages.error(request, 'کد اشتباه است', 'danger')
                 return redirect('accounts:verify_code')
         return render(request, self.template_name, {'form': form})
 

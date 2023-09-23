@@ -191,7 +191,7 @@ class EditUserInfoForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
-        print('--'*10, self.request)
+        # print('--'*10, self.request)
         super(EditUserInfoForm, self).__init__(*args, **kwargs)
 
     def clean_email(self):

@@ -68,6 +68,9 @@ class BookComment(models.Model):
     sub_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='sub_comments', null=True, blank=True)
     is_sub = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ('datetime_created',)
+
     def __str__(self):
         return "comment of %s" % self.author.phone_number
 

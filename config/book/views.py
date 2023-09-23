@@ -1,8 +1,12 @@
 from django.shortcuts import render, redirect
 from django.views import generic, View
-from .models import Book, Category, BookComment
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+
+from .models import Book, Category, BookComment
+from .forms import BookCommentForm
 
 
 class HomeView(View):
@@ -28,19 +32,30 @@ class HomeView(View):
 class BookDetailView(View):
     model = Book
     template_name = 'book/detail.html'
+    from_class = BookCommentForm
 
     def setup(self, request, *args, **kwargs):
-        self.comments = BookComment.objects.filter(pk=kwargs['pk'])
         self.book = get_object_or_404(self.model, pk=kwargs['pk'])
+        self.comments = self.book.book_comments.filter(is_pub=True)
         return super().setup(request, *args, **kwargs)
 
     def dispatch(self, request, *args, **kwargs):
         if not self.book.slug == kwargs['slug']:
-            return redirect(reverse('book:book_detail', args=(self.book.pk, self.book.slug, )))
+            return redirect(reverse('book:book_detail', args=(self.kwargs['pk'], self.kwargs['slug'], )))
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name, {'book': self.book, 'comments': self.comments})
+        form = self.from_class
+        return render(request, self.template_name, {'book': self.book, 'comments': self.comments, 'form': form})
+
+    # @login_required
+    def post(self, request, *args, **kwargs):
+        form = self.from_class(request.POST)
+        if form.is_valid():
+            form.save(commit=True, book=self.book, user=request.user)
+            messages.success(request, 'نظر شما با موفقیت ثبت شد', 'success')
+            return redirect(reverse('book:book_detail', args=(self.kwargs['pk'], self.kwargs['slug'], )))
+        return render(request, self.template_name, {'book': self.book, 'comments': self.comments, 'form': form})
 
 
 class BookListView(generic.ListView):
