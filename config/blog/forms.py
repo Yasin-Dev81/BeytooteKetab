@@ -1,19 +1,19 @@
 from django import forms
 
-from .models import BookComment
+from .models import BlogComment
 
 
-class BookCommentForm(forms.Form):
+class BlogCommentForm(forms.Form):
     text = forms.CharField(
         label="کامنت",
         widget=forms.Textarea(attrs={"class": "form__textarea", "placeholder": "افزودن دیدگاه"})
     )
 
-    def save(self, book, user, commit=True):
+    def save(self, blog, user, commit=True):
         cd = self.cleaned_data
-        comment = BookComment.objects.create(
+        comment = BlogComment.objects.create(
             text=cd['text'],
-            book=book,
+            blog=blog,
             author=user
         )
         if commit:

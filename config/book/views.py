@@ -38,7 +38,7 @@ class BookDetailView(View):
     def setup(self, request, *args, **kwargs):
         self.book = get_object_or_404(self.model, pk=kwargs['pk'])
         self.comments = self.book.book_comments.filter(is_pub=True)
-        self.category = Category.objects.get(pk=self.book.category.pk).book_categories.all()
+        self.category = Category.objects.get(pk=self.book.category.pk).book_categories.order_by('?')[:4]
         self.is_fav = False
         if request.user.is_authenticated:
             self.is_fav = self.book.favorites.filter(pk=request.user.pk).exists()

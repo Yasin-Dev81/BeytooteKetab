@@ -21,7 +21,7 @@ class BlogCategory(models.Model):
 
 
 class Blog(models.Model):
-    category = models.ForeignKey(BlogCategory, on_delete=models.CASCADE, related_name='book_categories')
+    category = models.ForeignKey(BlogCategory, on_delete=models.CASCADE, related_name='blog_categories')
 
     title = models.CharField(max_length=200, null=False, blank=False)
     slug = models.SlugField(max_length=200, unique=True)
@@ -39,8 +39,8 @@ class Blog(models.Model):
     def __str__(self):
         return self.title
 
-    # def get_absolute_url(self):
-    #     return reverse('', args=[self.pk, self.slug, ])
+    def get_absolute_url(self):
+        return reverse('blog:blog_detail', args=[self.pk, self.slug, ])
 
 
 class BlogComment(models.Model):
@@ -51,7 +51,7 @@ class BlogComment(models.Model):
 
     is_pub = models.BooleanField(default=True)
 
-    sub_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='sub_comments', null=True, blank=True)
+    sub_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='sub_blogcomments', null=True, blank=True)
     is_sub = models.BooleanField(default=False)
 
     class Meta:
@@ -60,5 +60,5 @@ class BlogComment(models.Model):
     def __str__(self):
         return "comment of %s" % self.author.phone_number
 
-    # def get_absolute_url(self):
-    #     return reverse('book:book_detail', args=[self.book.pk, self.book.slug])
+    def get_absolute_url(self):
+        return reverse('blog:blog_detail', args=[self.blog.pk, self.blog.slug])
