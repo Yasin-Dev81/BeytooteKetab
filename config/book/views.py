@@ -59,4 +59,13 @@ class BookListView(generic.ListView):
     def get_context_data(self, *args, **kwargs):
         context = super(BookListView, self).get_context_data(*args, **kwargs)
         context['category_list'] = Category.objects.all()
+        context['filter'] = self.request.GET.get('filter', 'give-default-value')
+        context['orderby'] = self.request.GET.get('orderby', '-datetime_created')
         return context
+
+    def get_queryset(self):
+        # filter_val = self.request.GET.get('filter', 'give-default-value')
+        order = self.request.GET.get('orderby', '-datetime_created')
+        print(order)
+        new_context = Book.objects.all().order_by(order)
+        return new_context

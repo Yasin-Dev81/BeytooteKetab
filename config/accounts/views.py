@@ -71,10 +71,15 @@ class UserRegisterVerifyCodeView(View):
 
 
 class UserLogoutView(LoginRequiredMixin, View):
+
+    def setup(self, request, *args, **kwargs):
+        self.referring_page = request.GET.get('next', '/')
+        return super().setup(request, *args, **kwargs)
+
     def get(self, request):
         logout(request)
         messages.success(request, 'با موفقیت خارج شدید', 'success')
-        return redirect('book:home')
+        return redirect(self.referring_page)
 
 
 class UserLoginView(View):
@@ -87,7 +92,7 @@ class UserLoginView(View):
 
     def get(self, request):
         form = self.form_class
-        print('-'*10, self.referring_page)
+        # print('-' * 10, self.referring_page)
         return render(request, self.template_name, {'form': form})
 
     def post(self, request):

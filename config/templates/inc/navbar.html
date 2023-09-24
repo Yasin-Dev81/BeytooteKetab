@@ -32,7 +32,9 @@
                     <a class="header__nav-link" href="{% url 'blog:blog_list' %}">بلاگ</a>
                 </li>
                 <li class="header__nav-item">
-                <a class="header__nav-link" href="{% url 'order:premium_plans' %}">اشتراک پریمیوم</a>
+                <a class="header__nav-link" href="{% url 'order:premium_plans' %}">
+                    اشتراک پریمیوم
+                </a>
                 </li>
                 <li class="header__nav-item">
                 <a class="header__nav-link" href="{% url 'home:faq' %}">مرکز راهنما</a>
@@ -57,8 +59,15 @@
             </ul>
 
             {% if user.is_authenticated %}
-                <div class="header__actions">
-                    <a href="{% url 'accounts:user_logout' %}" class="header__login mr-auto">
+                <div class="header__actions mr-auto">
+                    <a href="{% url 'order:premium_plans' %}" class="header__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 24 24">
+                            <path d="M12 2l1.4 4.3h4.6l-3.7 2.7 1.3 4.5-3.9-2.9-3.9 2.9 1.3-4.5-3.7-2.7h4.6z"/>
+                            <path d="M0 0h24v24H0z" fill="none"/>
+                        </svg>
+                        <span>Upgrade to Premium</span>
+                    </a>
+                    <a href="{% url 'accounts:user_logout' %}?next={{ request.path }}" class="header__login mr-auto">
                     <svg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 512 512'>
                         <path d='M192,176V136a40,40,0,0,1,40-40H392a40,40,0,0,1,40,40V376a40,40,0,0,1-40,40H240c-22.09,0-48-17.91-48-40V336' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'/>
                         <polyline points='288 336 368 256 288 176' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'/>
@@ -69,7 +78,14 @@
                 </div>
             {% else %}
                 <div class="header__actions">
-                    <a href="{% url 'accounts:user_login' %}" class="header__login mr-auto">
+                    <a href="{% url 'order:premium_plans' %}" class="header__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 24 24">
+                            <path d="M12 2l1.4 4.3h4.6l-3.7 2.7 1.3 4.5-3.9-2.9-3.9 2.9 1.3-4.5-3.7-2.7h4.6z"/>
+                            <path d="M0 0h24v24H0z" fill="none"/>
+                        </svg>
+                        <span>Upgrade to Premium</span>
+                    </a>
+                    <a href="{% url 'accounts:user_login' %}?next={{ request.path }}" class="header__login mr-auto">
                     <svg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 512 512'>
                         <path d='M192,176V136a40,40,0,0,1,40-40H392a40,40,0,0,1,40,40V376a40,40,0,0,1-40,40H240c-22.09,0-48-17.91-48-40V336' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'/>
                         <polyline points='288 336 368 256 288 176' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'/>
@@ -121,11 +137,12 @@
                 </a>
 
                 <a href="{% url 'order:user_profile' %}" class="header__link">
-                    <svg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 512 512'>
-                        <circle cx='176' cy='416' r='16' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'/><circle cx='400' cy='416' r='16' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'/>
-                        <polyline points='48 80 112 80 160 352 416 352' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'/><path d='M160,288H409.44a8,8,0,0,0,7.85-6.43l28.8-144a8,8,0,0,0-7.85-9.57H128' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'/>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+                        <circle cx="256" cy="208" r="96" style="fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"/>
+                        <path d="M256 336c-48 0-88-40-88-88s40-88 88-88 88 40 88 88-40 88-88 88z" style="fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"/>
+                        <path d="M416 464c0-48-40-80-88-80H184c-48 0-88 32-88 80" style="fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"/>
                     </svg>
-                <span>پروفایل</span>
+                    <span>پروفایل</span>
                 </a>
             </div>
             </div>

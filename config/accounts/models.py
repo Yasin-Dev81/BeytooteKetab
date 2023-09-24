@@ -34,7 +34,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     def is_premium(self) -> bool:
         if not self.premium_expire_date:
             return False
-        return self.premium_expire_date <= datetime.datetime.now()
+        # return self.premium_expire_date >= datetime.datetime.now()
+        return False
 
 
 class OtpCode(models.Model):
