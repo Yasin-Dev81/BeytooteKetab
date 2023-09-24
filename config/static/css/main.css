@@ -4359,6 +4359,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     letter-spacing: 0.6px;
     text-transform: uppercase;
 }
+
 .page-404__btn:hover {
     background-color: #a782e9;
     color: #fff;

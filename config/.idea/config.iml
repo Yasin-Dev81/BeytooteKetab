@@ -28,6 +28,8 @@
         <option value="$MODULE_DIR$/accounts/templates" />
         <option value="$MODULE_DIR$/templates" />
         <option value="$MODULE_DIR$/blog/templates" />
+        <option value="$MODULE_DIR$/book/templates" />
+        <option value="$MODULE_DIR$/order/templates" />
       </list>
     </option>
   </component>

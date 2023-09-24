@@ -1,13 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views import View
-from . import forms
-from book.models import Book
-import random
-from utils import send_otp_code
-from .models import OtpCode, User
-from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import PasswordChangeView
+from django.contrib import messages
+from .models import OtpCode, User
+from utils import send_otp_code
+from django.views import View
+from book.models import Book
+import random
+
+from . import forms
 
 
 class UserRegisterView(View):
@@ -69,10 +71,15 @@ class UserRegisterVerifyCodeView(View):
 
 
 class UserLogoutView(LoginRequiredMixin, View):
+
+    def setup(self, request, *args, **kwargs):
+        self.referring_page = request.GET.get('next', '/')
+        return super().setup(request, *args, **kwargs)
+
     def get(self, request):
         logout(request)
         messages.success(request, 'با موفقیت خارج شدید', 'success')
-        return redirect('book:home')
+        return redirect(self.referring_page)
 
 
 class UserLoginView(View):
@@ -85,7 +92,7 @@ class UserLoginView(View):
 
     def get(self, request):
         form = self.form_class
-        print('-'*10, self.referring_page)
+        # print('-' * 10, self.referring_page)
         return render(request, self.template_name, {'form': form})
 
     def post(self, request):
@@ -97,7 +104,7 @@ class UserLoginView(View):
                 login(request, user)
                 messages.success(request, 'با موفقیت وارد شدید', 'info')
                 return redirect(self.referring_page)
-            messages.error(request, 'شماره تلفن یا پسورد اشتباه است!', 'warning')
+            messages.warning(request, 'شماره تلفن یا پسورد اشتباه است!', 'warning')
         return render(request, self.template_name, {'form': form})
 
 
@@ -171,7 +178,7 @@ class AddFavoritesView(LoginRequiredMixin, View):
     def get(self, request, pk):
         in_favorites_list = self.user_fav.filter(pk=pk).exists()
         if in_favorites_list:
-            messages.warning(request, 'کتاب قبلا به لیست اضافه شده است', 'danger')
+            messages.error(request, 'کتاب قبلا به لیست اضافه شده است', 'danger')
             return redirect(self.referring_page)
 
         book = get_object_or_404(Book, pk=pk)
@@ -193,7 +200,7 @@ class RemoveFavoritesView(LoginRequiredMixin, View):
     def get(self, request, pk):
         in_favorites_list = self.user_fav.filter(pk=pk).exists()
         if not in_favorites_list:
-            messages.warning(request, 'کتاب در لیست نیست', 'danger')
+            messages.error(request, 'کتاب در لیست نیست', 'danger')
             return redirect(self.referring_page)
 
         book = get_object_or_404(Book, pk=pk)
@@ -227,3 +234,13 @@ class EditUserInfoView(LoginRequiredMixin, View):
             messages.success(request, 'اطلاعات با موفقیت آپدیت شد', 'success')
             return redirect('accounts:user_info_edit')
         return render(request, self.template_name, {'form': form})
+
+
+class UpdatePassword(PasswordChangeView):
+    form_class = forms.CustomPasswordChangeForm
+    success_url = '/'
+    template_name = 'accounts/change_password.html'
+
+    def form_valid(self, form):
+        messages.success(request, 'پسورد با موفقیت آپدیت شد', 'success')
+        return super().form_valid(form)
