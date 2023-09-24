@@ -23,8 +23,9 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls', namespace='accounts')),
-    path('', include('book.urls', namespace='book')),
-    path('blog/', include('blog.urls', namespace='blog'))
+    path('book/', include('book.urls', namespace='book')),
+    path('blog/', include('blog.urls', namespace='blog')),
+    path('', include('home.urls', namespace='home'))
 ]
 
 
