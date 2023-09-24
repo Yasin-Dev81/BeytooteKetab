@@ -9,8 +9,9 @@ favorites_url = [
     path('remove/<int:pk>/', views.RemoveFavoritesView.as_view(), name='remove_favorites')
 ]
 
-info_url = [
-    path('edit/', views.EditUserInfoView.as_view(), name='user_info_edit')
+profile_url = [
+    path('info/', views.EditUserInfoView.as_view(), name='user_info_edit'),
+    path('password/', views.UpdatePassword.as_view(), name='user_password_edit')
 ]
 
 urlpatterns = [
@@ -21,6 +22,6 @@ urlpatterns = [
     path('forgot/', views.UserPasswordResetView.as_view(), name='forgot_password'),
     path('forgot/verify/', views.UserPasswordResetVerifyCodeView.as_view(), name='forgot_password_verify'),
 
-    path('info/', include(info_url)),
+    path('edit/', include(profile_url)),
     path('favorites/', include(favorites_url)),
 ]

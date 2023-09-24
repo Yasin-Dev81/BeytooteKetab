@@ -1,13 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views import View
-from . import forms
-from book.models import Book
-import random
-from utils import send_otp_code
-from .models import OtpCode, User
-from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import PasswordChangeView
+from django.contrib import messages
+from .models import OtpCode, User
+from utils import send_otp_code
+from django.views import View
+from book.models import Book
+import random
+
+from . import forms
 
 
 class UserRegisterView(View):
@@ -227,3 +229,13 @@ class EditUserInfoView(LoginRequiredMixin, View):
             messages.success(request, 'اطلاعات با موفقیت آپدیت شد', 'success')
             return redirect('accounts:user_info_edit')
         return render(request, self.template_name, {'form': form})
+
+
+class UpdatePassword(PasswordChangeView):
+    form_class = forms.CustomPasswordChangeForm
+    success_url = '/'
+    template_name = 'accounts/change_password.html'
+
+    def form_valid(self, form):
+        messages.success(request, 'پسورد با موفقیت آپدیت شد', 'success')
+        return super().form_valid(form)

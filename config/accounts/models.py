@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from ckeditor.fields import RichTextField
 from .managers import UserManager
 import datetime
 
@@ -23,7 +24,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['email', 'full_name']
 
     def __str__(self):
-        return "%s - %s" % (self.phone_number, self.full_name, )
+        return "%s - %s" % (self.phone_number, self.full_name,)
 
     @property
     def is_staff(self):

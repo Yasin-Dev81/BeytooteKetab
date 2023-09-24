@@ -37,11 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     # local apps
     'accounts.apps.AccountsConfig',
     'book.apps.BookConfig',
     'blog.apps.BlogConfig',
     'home.apps.HomeConfig',
+    'order.apps.OrderConfig',
 
     # third-party app
     'ckeditor',
