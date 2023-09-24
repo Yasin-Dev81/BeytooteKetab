@@ -30,11 +30,12 @@ class ProfileView(LoginRequiredMixin, View):
 
 
 class PremiumPlansView(LoginRequiredMixin, generic.ListView):
-    template_name = 'order/checkout.html'
+    template_name = 'order/premium_plan_list.html'
     model = PremiumPlan
 
 
 class OrderCreateView(LoginRequiredMixin, View):
+
     def setup(self, request, *args, **kwargs):
         self.plan = get_object_or_404(PremiumPlan, pk=kwargs['plan_id'])
         return super().setup(request, *args, **kwargs)
@@ -43,10 +44,11 @@ class OrderCreateView(LoginRequiredMixin, View):
         return render(request, 'order/accept_order.html', {'plan': self.plan})
 
     def post(self, request, *args, **kwargs):
+        price = self.plan.price
         order = PremiumOrder.objects.create(
             user=request.user,
             plan=self.plan,
-            paid_count=self.plan.price
+            paid_count=price
         )
         order.save()
         request.session['order_pay'] = {
@@ -78,12 +80,15 @@ class OrderPayView(LoginRequiredMixin, View):
         else:
             e_code = req.json()['errors']['code']
             e_message = req.json()['errors']['message']
-            messages.warning(
+            messages.error(
                 request,
-                "مشکلی در انتقال به شبکه پرداخت به وجود آمده است لطفا دقایقی دیگر دوباره امتحان نمایید!"
+                "مشکلی در انتقال به شبکه پرداخت به وجود آمده است لطفا دقایقی دیگر دوباره امتحان نمایید!",
+                "danger"
             )
+            order.delete()
+            request.session['order_pay'] = {}
             # return HttpResponse(f"Error code: {e_code}, Error Message: {e_message}")
-            return redirect(reverse('home:home'))
+            return redirect(reverse("order:premium_plans"))
 
 
 class OrderVerifyView(LoginRequiredMixin, View):
@@ -116,13 +121,13 @@ class OrderVerifyView(LoginRequiredMixin, View):
                     messages.success(request, "تراکنش ارسال شده %s" % str(req.json()['data']['message']))
                 else:
                     # return HttpResponse('Transaction failed.\nStatus: ' + str(req.json()['data']['message']))
-                    messages.warning(request, "Transaction failed.\nStatus: " + str(req.json()['data']['message']))
+                    messages.error(request, "Transaction failed.\nStatus: " + str(req.json()['data']['message']), "danger")
             else:
                 e_code = req.json()['errors']['code']
                 e_message = req.json()['errors']['message']
-                messages.warning(request, f"Error code: {e_code}, Error Message: {e_message}")
+                messages.error(request, f"Error code: {e_code}, Error Message: {e_message}", "danger")
                 # return HttpResponse(f"Error code: {e_code}, Error Message: {e_message}")
         else:
             # return HttpResponse('Transaction failed or canceled by user')
-            messages.warning(request, "Transaction failed or canceled by user")
+            messages.error(request, "Transaction failed or canceled by user", "danger")
         return redirect(reverse('order:user_profile'))

@@ -104,7 +104,7 @@ class UserLoginView(View):
                 login(request, user)
                 messages.success(request, 'با موفقیت وارد شدید', 'info')
                 return redirect(self.referring_page)
-            messages.error(request, 'شماره تلفن یا پسورد اشتباه است!', 'warning')
+            messages.warning(request, 'شماره تلفن یا پسورد اشتباه است!', 'warning')
         return render(request, self.template_name, {'form': form})
 
 
@@ -178,7 +178,7 @@ class AddFavoritesView(LoginRequiredMixin, View):
     def get(self, request, pk):
         in_favorites_list = self.user_fav.filter(pk=pk).exists()
         if in_favorites_list:
-            messages.warning(request, 'کتاب قبلا به لیست اضافه شده است', 'danger')
+            messages.error(request, 'کتاب قبلا به لیست اضافه شده است', 'danger')
             return redirect(self.referring_page)
 
         book = get_object_or_404(Book, pk=pk)
@@ -200,7 +200,7 @@ class RemoveFavoritesView(LoginRequiredMixin, View):
     def get(self, request, pk):
         in_favorites_list = self.user_fav.filter(pk=pk).exists()
         if not in_favorites_list:
-            messages.warning(request, 'کتاب در لیست نیست', 'danger')
+            messages.error(request, 'کتاب در لیست نیست', 'danger')
             return redirect(self.referring_page)
 
         book = get_object_or_404(Book, pk=pk)
