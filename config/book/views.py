@@ -54,18 +54,38 @@ class BookDetailView(View):
 class BookListView(generic.ListView):
     model = Book
     template_name = 'book/catalog.html'
+    context_object_name = 'books'
     paginate_by = 8
 
-    def get_context_data(self, *args, **kwargs):
-        context = super(BookListView, self).get_context_data(*args, **kwargs)
-        context['category_list'] = Category.objects.all()
-        context['filter'] = self.request.GET.get('filter', 'give-default-value')
-        context['orderby'] = self.request.GET.get('orderby', '-datetime_created')
-        return context
-
     def get_queryset(self):
-        # filter_val = self.request.GET.get('filter', 'give-default-value')
-        order = self.request.GET.get('orderby', '-datetime_created')
-        print(order)
-        new_context = Book.objects.all().order_by(order)
-        return new_context
+        # Retrieve the selected sorting option from the GET parameters
+        orderby = self.request.GET.get('sort', '-datetime_created')
+
+        # Retrieve the list of selected genres from the GET parameters
+        selected_genres = [slug for slug in Category.objects.values_list('slug', flat=True) if self.request.GET.get(slug)]
+
+        # Start with all books
+        books = Book.objects.all()
+
+        # Apply genre filters if selected
+        if selected_genres:
+            books = books.filter(category__slug__in=selected_genres)
+
+        # Apply sorting
+        if "like_count" in orderby:
+            books = sorted(books, key=lambda t: t.like_count * (-1))
+        else:
+            books = books.order_by(orderby)
+
+        return books
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Pass the category list to the template
+        context['category_list'] = Category.objects.all()
+
+        # Pass the selected genres to the template
+        context['selected_genres'] = [obj for obj in Category.objects.all() if self.request.GET.get(obj.slug)]
+
+        return context

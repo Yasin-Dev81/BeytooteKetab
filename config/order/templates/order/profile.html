@@ -7,187 +7,208 @@
 {% endblock %}
 
 {% block content %}
-<!-- page title -->
-<section class="section section--first section--last section--head" data-bg="{% static 'img/bg.jpg' %}">
-    <div class="container">
-    <div class="row">
-        <div class="col-12">
-        <div class="section__wrap">
-            <!-- section title -->
-            <h2 class="section__title">پروفایل</h2>
-            <!-- end section title -->
-
-            <!-- breadcrumb -->
-            <ul class="breadcrumb">
-            <li class="breadcrumb__item"><a href="{% url 'home:home' %}">خانه</a></li>
-            <li class="breadcrumb__item breadcrumb__item--active">پروفایل</li>
-            </ul>
-            <!-- end breadcrumb -->
-        </div>
-        </div>
-    </div>
-    </div>
-</section>
-<!-- end page title -->
-
-<!-- section -->
-<section class="section section--last">
-    <div class="container">
-    <div class="row">
-        <div class="col-12">
-        <div class="profile">
-            <ul class="nav nav-tabs profile__tabs" id="profile__tabs" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="true">تراکنش‌های من</a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2" aria-selected="false">تنظیمات</a>
-            </li>
-            </ul>
-
-            <button class="profile__logout" type="button">خروج</button>
-        </div>
-        </div>
-    </div>
-    </div>
-
-    <div class="container">
-    <!-- content tabs -->
-    <div class="tab-content">
-        <div class="tab-pane fade show active" id="tab-1" role="tabpanel">
-        <div class="row">
-            <div class="col-12">
-            <div class="table-responsive table-responsive--border">
-                <table class="profile__table">
-                <thead>
-                    <tr>
-                    <th>#</th>
-                    <th>کد رهگیری</th>
-                    <th>عنوان (نوع پلن)</th>
-                    <th>تاریخ</th>
-                    <th>قیمت</th>
-                    <th>وضعیت</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    {% for order in orders %}
-                        <tr>
-                        <td>{{ forloop.counter }}</td>
-                        <td><a href="#">{{ order.tracking_code }}</a></td>
-                        <td>{{ order.plan.name }}</td>
-                        <td>{{ order.datetime_modified }}</td>
-                        <td><span class="profile__price">{{ order.paid_count | intcomma }}</span></td>
-                        {% if order.paid %}
-                            <td><span class="profile__status profile__status--confirmed">پرداخت شده</span></td>
-                        {% else %}
-                            <td><span class="profile__status profile__status--cenceled">پرداخت نشده</span></td>
-                        {% endif %}
-                        </tr>
-                        <tr>
-                    {% endfor %}
-                </tbody>
-                </table>
-            </div>
-            </div>
-
-            <!-- paginator -->
-            <div class="col-12">
-            <div class="paginator">
-                <div class="paginator__counter">
-                    صفحه {{ orders.number }} از {{ orders.paginator.num_pages }}
-                </div>
-
-                <ul class="paginator__wrap">
-                {% if orders.has_previous %}
-                    <li class="paginator__item paginator__item--prev">
-                        <a href="?page={{ orders.previous_page_number }}">
-                        <svg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 512 512'>
-                            <polyline points='268 112 412 256 268 400' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:48px'/><line x1='392' y1='256' x2='100' y2='256' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:48px'/>
-                        </svg>
-                        </a>
-                    </li>
-                    <li class="paginator__item"><a href="?page={{ orders.previous_page_number }}">{{ orders.previous_page_number }}</a></li>
-                {% endif %}
-                <li class="paginator__item paginator__item--active"><a href="#">{{ orders.number }}</a></li>
-
-                {% if orders.has_next %}
-                    <li class="paginator__item"><a href="?page={{ orders.next_page_number }}">{{ orders.next_page_number }}</a></li>
-                    <li class="paginator__item paginator__item--next">
-                        <a href="?page={{ orders.next_page_number }}">
-                        <svg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 512 512'>
-                            <polyline points='244 400 100 256 244 112' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:48px'/><line x1='120' y1='256' x2='412' y2='256' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:48px'/>
-                        </svg>
-                        </a>
-                    </li>
-                {% endif %}
-                </ul>
-            </div>
-            </div>
-            <!-- end paginator -->
-        </div>
-        </div>
-
-        <div class="tab-pane fade" id="tab-2" role="tabpanel">
-        <div class="row">
-            <!-- details form -->
-            <div class="col-12 col-lg-6">
-            <form action="#" class="form">
-                <div class="row">
+    <!-- page title -->
+    <section class="section section--first section--last section--head" data-bg="{% static 'img/bg.jpg' %}">
+        <div class="container">
+            <div class="row">
                 <div class="col-12">
-                    <h4 class="form__title">جزئیات پروفایل</h4>
-                </div>
+                    <div class="section__wrap">
+                        <!-- section title -->
+                        <h2 class="section__title">پروفایل</h2>
+                        <!-- end section title -->
 
-                <div class="col-12 col-md-6 col-lg-12 col-xl-6">
-                    <p class="form__label">نام و نام خانوادگی :</p>
-                    <p class="text-center text-light">{{ user.full_name }}</p>
-                </div>
-
-                <div class="col-12 col-md-6 col-lg-12 col-xl-6">
-                    <p class="form__label">شماره تلفن :</p>
-                    <p class="text-center text-light">{{ user.phone_number }}</p>
-                </div>
-
-                <div class="col-12 col-md-6 col-lg-12 col-xl-6">
-                    <p class="form__label">ایمیل :</p>
-                    <p class="text-center text-light">{{ user.email }}</p>
-                </div>
-
-                <div class="col-12 col-md-6 col-lg-12 col-xl-6">
-                    <p class="form__label">پریمیوم :</p>
-                    {% if user.is_premium %}
-                        <p class="text-center text-light">
-                                فعال است
-                        </p>
-                    {% else %}
-                        <div class="text-center text-danger">
-                            غیرفعال است
-                        </div>
-                    {% endif %}
-                </div>
-                {% if user.premium_expire_date %}
-                    <div class="col-12 col-md-6 col-lg-12 col-xl-6">
-                        <p class="form__label">تاریخ اتمام پلن پریمیوم :</p>
-                        <p class="text-center text-light">{{ user.premium_expire_date }}</p>
+                        <!-- breadcrumb -->
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb__item"><a href="{% url 'home:home' %}">خانه</a></li>
+                            <li class="breadcrumb__item breadcrumb__item--active">پروفایل</li>
+                        </ul>
+                        <!-- end breadcrumb -->
                     </div>
-                {% endif %}
-
-                <p></p>
-
-                <div class="col-12">
-                    <a class="form__btn" type="button" href="{% url 'accounts:user_info_edit' %}">رفتن به صفحه تغییر</a>
                 </div>
-                <br>
-                </div>
-            </form>
             </div>
-            <!-- end details form -->
         </div>
+    </section>
+    <!-- end page title -->
+
+    <!-- section -->
+    <section class="section section--last">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="profile">
+                        <ul class="nav nav-tabs profile__tabs" id="profile__tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#tab-1" role="tab"
+                                   aria-controls="tab-1" aria-selected="true">تراکنش‌های من</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2"
+                                   aria-selected="false">تنظیمات</a>
+                            </li>
+                        </ul>
+
+                        <button class="profile__logout" type="button">خروج</button>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <!-- end content tabs -->
-    </div>
-</section>
-<!-- end section -->
+
+        <div class="container">
+            <!-- content tabs -->
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="tab-1" role="tabpanel">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="table-responsive table-responsive--border">
+                                <table class="profile__table">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>کد رهگیری</th>
+                                        <th>عنوان (نوع پلن)</th>
+                                        <th>تاریخ</th>
+                                        <th>قیمت</th>
+                                        <th>وضعیت</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    {% for order in orders %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td><a href="#">{{ order.tracking_code }}</a></td>
+                                            <td>{{ order.plan.name }}</td>
+                                            <td>{{ order.datetime_modified }}</td>
+                                            <td><span class="profile__price">{{ order.paid_count | intcomma }}</span>
+                                            </td>
+                                            {% if order.paid %}
+                                                <td><span
+                                                        class="profile__status profile__status--confirmed">پرداخت شده</span>
+                                                </td>
+                                            {% else %}
+                                                <td><span
+                                                        class="profile__status profile__status--cenceled">پرداخت نشده</span>
+                                                </td>
+                                            {% endif %}
+                                        </tr>
+                                        <tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- paginator -->
+                        <div class="col-12">
+                            <div class="paginator">
+                                <div class="paginator__counter">
+                                    صفحه {{ orders.number }} از {{ orders.paginator.num_pages }}
+                                </div>
+
+                                <ul class="paginator__wrap">
+                                    {% if orders.has_previous %}
+                                        <li class="paginator__item paginator__item--prev">
+                                            <a href="?page={{ orders.previous_page_number }}">
+                                                <svg xmlns='http://www.w3.org/2000/svg' width='512' height='512'
+                                                     viewBox='0 0 512 512'>
+                                                    <polyline points='268 112 412 256 268 400'
+                                                              style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:48px'/>
+                                                    <line x1='392' y1='256' x2='100' y2='256'
+                                                          style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:48px'/>
+                                                </svg>
+                                            </a>
+                                        </li>
+                                        <li class="paginator__item"><a
+                                                href="?page={{ orders.previous_page_number }}">{{ orders.previous_page_number }}</a>
+                                        </li>
+                                    {% endif %}
+                                    <li class="paginator__item paginator__item--active"><a
+                                            href="#">{{ orders.number }}</a></li>
+
+                                    {% if orders.has_next %}
+                                        <li class="paginator__item"><a
+                                                href="?page={{ orders.next_page_number }}">{{ orders.next_page_number }}</a>
+                                        </li>
+                                        <li class="paginator__item paginator__item--next">
+                                            <a href="?page={{ orders.next_page_number }}">
+                                                <svg xmlns='http://www.w3.org/2000/svg' width='512' height='512'
+                                                     viewBox='0 0 512 512'>
+                                                    <polyline points='244 400 100 256 244 112'
+                                                              style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:48px'/>
+                                                    <line x1='120' y1='256' x2='412' y2='256'
+                                                          style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:48px'/>
+                                                </svg>
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- end paginator -->
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="tab-2" role="tabpanel">
+                    <div class="row">
+                        <!-- details form -->
+                        <div class="col-12 col-lg-6">
+                            <form action="#" class="form">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h4 class="form__title">جزئیات پروفایل</h4>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 col-lg-12 col-xl-6">
+                                        <p class="form__label">نام و نام خانوادگی :</p>
+                                        <p class="text-center text-light">{{ user.full_name }}</p>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 col-lg-12 col-xl-6">
+                                        <p class="form__label">شماره تلفن :</p>
+                                        <p class="text-center text-light">{{ user.phone_number }}</p>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 col-lg-12 col-xl-6">
+                                        <p class="form__label">ایمیل :</p>
+                                        <p class="text-center text-light">{{ user.email }}</p>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 col-lg-12 col-xl-6">
+                                        <p class="form__label">پریمیوم :</p>
+                                        {% if user.is_premium %}
+                                            <p class="text-center text-light">
+                                                فعال است
+                                            </p>
+                                        {% else %}
+                                            <div class="text-center text-danger">
+                                                غیرفعال است
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    {% if user.premium_expire_date %}
+                                        <div class="col-12 col-md-6 col-lg-12 col-xl-6">
+                                            <p class="form__label">تاریخ اتمام پلن پریمیوم :</p>
+                                            <p class="text-center text-light">{{ user.premium_expire_date }}</p>
+                                        </div>
+                                    {% endif %}
+
+                                    <p></p>
+
+                                    <div class="col-12">
+                                        <a class="form__btn" type="button" href="{% url 'accounts:user_info_edit' %}">رفتن
+                                            به صفحه تغییر</a>
+                                    </div>
+                                    <br>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- end details form -->
+                    </div>
+                </div>
+            </div>
+            <!-- end content tabs -->
+        </div>
+    </section>
+    <!-- end section -->
 {% endblock %}

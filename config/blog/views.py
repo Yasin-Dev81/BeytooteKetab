@@ -14,6 +14,39 @@ from book.models import Book
 class BlogListView(generic.ListView):
     template_name = 'blog/blog_list.html'
     model = Blog
+    paginate_by = 10
+
+    def get_queryset(self):
+        # Retrieve the selected sorting option from the GET parameters
+        orderby = self.request.GET.get('sort', '-datetime_created')
+
+        # Retrieve the list of selected genres from the GET parameters
+        # selected_genres = [slug for slug in BlogCategory.objects.values_list('slug', flat=True) if self.request.GET.get(slug)]
+        selected_genres = self.request.GET.get('selected_genres', 'all')
+        print("-"*10, selected_genres)
+
+        # Start with all blogs
+        blogs = Blog.objects.all()
+
+        # Apply genre filters if selected
+        if not selected_genres == "all":
+            blogs = blogs.filter(category__slug=selected_genres)
+
+        # Apply sorting
+        blogs = blogs.order_by(orderby)
+
+        return blogs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Pass the category list to the template
+        context['category_list'] = BlogCategory.objects.all()
+
+        # Pass the selected genres to the template
+        context['selected_genres'] = self.request.GET.get('selected_genres')
+
+        return context
 
 
 class BlogDetailView(View):
