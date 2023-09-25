@@ -42,53 +42,46 @@
                             <!-- filter -->
                             <form class="filter" action="{% url 'book:book_list' %}" method="get">
                                 <h4 class="filter__title">فیلتر ها
-                                    <button type="button">خذف</button>
+                                    <a type="button" href="{% url 'book:book_list' %}">حذف</a>
                                 </h4>
 
                                 <div class="filter__group">
-                                    <label class="filter__label">کلمه کلیدی
-                                        :</label>
-                                    <input type="text" class="filter__input" placeholder="کلمه">
+                                    <label for="sort" class="filter__label">مرتب سازی :</label>
+                                    <div class="filter__select-wrap">
+                                        <select name="sort" id="sort" class="filter__select">
+                                            <option value="-datetime_created"
+                                                    {% if request.GET.sort == '-datetime_created' %}
+                                                    selected {% endif %}>جدیدترین
+                                            </option>
+                                            <option value="datetime_created"
+                                                    {% if request.GET.sort == 'datetime_created' %}
+                                                    selected {% endif %}>قدیمی ترین
+                                            </option>
+                                            <option value="-like_count" {% if request.GET.sort == '-like_count' %}
+                                                    selected {% endif %}>محبوب‌ترین
+                                            </option>
+                                        </select>
+                                    </div>
                                 </div>
 
-                                    <div class="filter__group">
-                                        <label for="sort" class="filter__label">مرتب سازی :</label>
 
-                                        <div class="filter__select-wrap">
-                                            <select name="sort" id="sort" class="filter__select">
-                                                <option value="{{ orderby }}">{{ orderby }}</option>
-                                                <option value="0">مرتبط</option>
-                                                <option value="-datetime_created">جدیدترین</option>
-                                                <option value="datetime_created">قدیمی ترین</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="filter__group">
-                                        <label class="filter__label">پلتفرم ها :</label>
-                                        <ul class="filter__checkboxes">
-                                            <li>
-                                                <input id="type1" type="checkbox" name="type1" checked="">
-                                                <label for="type1">پلی استیشن</label>
-                                            </li>
-                                            <li>
-                                                <input id="type2" type="checkbox" name="type2">
-                                                <label for="type2">ایکس باکس</label>
-                                            </li>
-                                            <li>
-                                                <input id="type3" type="checkbox" name="type3">
-                                                <label for="type3">ویندوز</label>
-                                            </li>
-                                            <li>
-                                                <input id="type4" type="checkbox" name="type4">
-                                                <label for="type4">مک</label>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                                    <div class="filter__group">
-                                        <label class="filter__label">ژانر ها :</label>
-                                        <ul class="filter__checkboxes">
+                                <div class="filter__group">
+                                    <label class="filter__label">ژانر ها :</label>
+                                    <ul class="filter__checkboxes">
+                                        {% if selected_genres %}
+                                            {% for obj in category_list %}
+                                                <li>
+                                                    {% if obj in selected_genres %}
+                                                        <input id="{{ obj.slug }}" type="checkbox" name="{{ obj.slug }}"
+                                                               checked="checked">
+                                                    {% else %}
+                                                        <input id="{{ obj.slug }}" type="checkbox"
+                                                               name="{{ obj.slug }}">
+                                                    {% endif %}
+                                                    <label for="{{ obj.slug }}">{{ obj.name }}</label>
+                                                </li>
+                                            {% endfor %}
+                                        {% else %}
                                             {% for obj in category_list %}
                                                 <li>
                                                     <input id="{{ obj.slug }}" type="checkbox" name="{{ obj.slug }}"
@@ -96,12 +89,13 @@
                                                     <label for="{{ obj.slug }}">{{ obj.name }}</label>
                                                 </li>
                                             {% endfor %}
-                                        </ul>
-                                    </div>
+                                        {% endif %}
+                                    </ul>
+                                </div>
 
-                                    <div class="filter__group">
-                                        <input class="filter__btn" type="button" value="اعمال فیلتر">
-                                    </div>
+                                <div class="filter__group">
+                                    <input class="filter__btn" type="submit" value="اعمال فیلتر">
+                                </div>
                             </form>
                             <!-- end filter -->
                         </div>
@@ -183,9 +177,10 @@
                         <div class="col-12">
                             <div class="paginator">
                                 <div class="paginator__counter">
-                                    12 از 144
-                                    |
-                                    {{ page_obj }}
+                                    صفحه
+                                    {{ page_obj.number }}
+                                    از
+                                    {{ paginator.num_pages }}
                                 </div>
 
                                 <ul class="paginator__wrap">
