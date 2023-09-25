@@ -56,16 +56,10 @@
 
                                 <ul class="dropdown-menu header__nav-menu header__nav-menu--scroll"
                                     aria-labelledby="dropdownMenu3">
-                                    <li><a href="checkout.html">ثبت نهایی</a></li>
-                                    <li><a href="{% url 'accounts:user_favorites' %}">نشان ها</a></li>
                                     <li><a href="{% url 'home:about' %}">درباره ما</a></li>
-                                    <li><a href="profile.html">پروفایل</a></li>
-                                    <li><a href="signin.html">ورود اعضا</a></li>
-                                    <li><a href="signup.html">ثبت نام</a></li>
-                                    <li><a href="forgot.html">فراموشی رمز عبور</a></li>
                                     <li><a href="{% url 'home:privacy' %}">حریم خصوصی</a></li>
                                     <li><a href="{% url 'home:contact' %}">تماس با ما</a></li>
-                                    <li><a href="404.html">صفحه 404</a></li>
+                                    <li><a href="{% url 'accounts:forgot_password' %}">فراموشی رمز عبور</a></li>
                                 </ul>
                         </ul>
 
@@ -129,18 +123,9 @@
             <div class="row">
                 <div class="col-12">
                     <div class="header__content">
-                        <form action="catalog.html" class="header__form" method="GET">
-                            <input type="text" class="header__input" placeholder="جستجو کنید ...">
-                            <select class="header__select">
-                                <option value="0">تمام ژانر ها</option>
-                                <option value="1">اکشن</option>
-                                <option value="3">ماجرا جویی</option>
-                                <option value="4">ترسناک</option>
-                                <option value="5">ورزشی</option>
-                                <option value="6">جنگی</option>
-                                <option value="7">مهیج</option>
-                            </select>
-                            <button class="header__btn" type="button">
+                        <form action="{% url 'book:book_list' %}" class="header__form" method="GET">
+                            <input type="text" class="header__input" placeholder="جستجو کنید ..." name="book_name" value="{{ request.GET.book_name }}">
+                            <button class="header__btn" type="submit">
                                 <svg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 512 512'>
                                     <path d='M221.09,64A157.09,157.09,0,1,0,378.18,221.09,157.1,157.1,0,0,0,221.09,64Z'
                                           style='fill:none;stroke-miterlimit:10;stroke-width:32px'/>

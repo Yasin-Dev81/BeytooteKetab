@@ -13,6 +13,12 @@ class CategoryAdmin(admin.ModelAdmin):
     }
 
 
+class BookFileInline(admin.StackedInline):  # StackedInline
+    model = BookFile
+    fields = ['file', 'format', ]
+    extra = 1
+
+
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
     list_display = [
@@ -34,6 +40,7 @@ class BookAdmin(admin.ModelAdmin):
     raw_id_fields = [
         'category'
     ]
+    inlines = (BookFileInline, )
 
 
 @admin.register(Lang)
@@ -61,17 +68,17 @@ class BookCommentAdmin(admin.ModelAdmin):
     ]
 
 
-@admin.register(BookFile)
-class BookFileAdmin(admin.ModelAdmin):
-    list_display = [
-        '__str__'
-    ]
-    search_fields = [
-        'book'
-    ]
-    list_filter = ['book']
-    ordering = ['book']
-
-    raw_id_fields = [
-        'book',
-    ]
+# @admin.register(BookFile)
+# class BookFileAdmin(admin.ModelAdmin):
+#     list_display = [
+#         '__str__'
+#     ]
+#     search_fields = [
+#         'book'
+#     ]
+#     list_filter = ['book']
+#     ordering = ['book']
+#
+#     raw_id_fields = [
+#         'book',
+#     ]

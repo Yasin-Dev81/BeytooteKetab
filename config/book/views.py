@@ -60,6 +60,7 @@ class BookListView(generic.ListView):
     def get_queryset(self):
         # Retrieve the selected sorting option from the GET parameters
         orderby = self.request.GET.get('sort', '-datetime_created')
+        book_name = self.request.GET.get('book_name')
 
         # Retrieve the list of selected genres from the GET parameters
         selected_genres = [slug for slug in Category.objects.values_list('slug', flat=True) if self.request.GET.get(slug)]
@@ -68,6 +69,8 @@ class BookListView(generic.ListView):
         books = Book.objects.all()
 
         # Apply genre filters if selected
+        if book_name:
+            books = books.filter(title__contains=book_name)
         if selected_genres:
             books = books.filter(category__slug__in=selected_genres)
 
