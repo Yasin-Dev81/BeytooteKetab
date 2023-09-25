@@ -21,6 +21,7 @@ class UserAdmin(BaseUserAdmin):
         ('Main', {'fields': ('email', 'phone_number', 'full_name', 'password')}),
         ('Permissions',
          {'fields': ('is_active', 'is_admin', 'is_superuser', 'last_login', 'groups', 'user_permissions')}),
+        ('Premium', {'fields': ('premium_expire_date', )}),
         ('Favorites', {'fields': ('favorites',)},),
     )
 

@@ -1,0 +1,30 @@
+{% extends 'accounts/_base.html' %}
+{% load humanize %}
+
+
+{% block title_content %}
+    تایید خرید
+{% endblock %}
+
+{% block content %}
+    <form class="loginfrm">
+        <h3 class="details__title" dir="auto">پلن: {{ plan }}</h3>
+        <ul class="details__list">
+        <li><span class="h5">قیمت:
+                {{ plan.price | intcomma }}
+            <span class="badge badge-warning text-dark">
+                تومن
+            </span>
+        </span></li>
+        <li><span>مدت زمان اشتراک:</span> {{ plan.months_duration }} </li>
+        </ul>
+    </form>
+    <br>
+    <form action="" method="post" class="loginfrm">
+        {% csrf_token %}
+        <div class="row justify-content-center text-center">
+            <input class="page-404__btn mx-2" type="submit" value="پرداخت با زرین‌پال">
+            <a class="btn btn-outline-danger" href="{% url 'order:premium_plans' %}">بازگشت</a>
+        </div>
+    </form>
+{% endblock %}

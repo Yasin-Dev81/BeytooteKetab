@@ -2,6 +2,7 @@ from django import forms
 from .models import User, OtpCode
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.contrib.auth.forms import PasswordChangeForm
 
 
 class UserCreationForm(forms.ModelForm):
@@ -223,3 +224,20 @@ class EditUserInfoForm(forms.Form):
         if commit:
             self.request.user.save()
         return self.request.user
+
+
+class CustomPasswordChangeForm(PasswordChangeForm):
+    old_password = forms.CharField(
+        label="رمز عبور",
+        widget=forms.PasswordInput(attrs={"class": "sign__input", "placeholder": 'رمز عبور'})
+    )
+    new_password1 = forms.CharField(
+        label="رمز عبور جدید",
+        widget=forms.PasswordInput(attrs={"class": "sign__input", "placeholder": 'رمز عبور'})
+    )
+    new_password2 = forms.CharField(
+        label="تکرار رمز عبور جدید",
+        help_text="رمز باید به حاوی حروف بزرگ و کوچک انگلیسی و اعداد باشد",
+        widget=forms.PasswordInput(attrs={"class": "sign__input", "placeholder": 'تکرار رمز عبور'})
+    )
+

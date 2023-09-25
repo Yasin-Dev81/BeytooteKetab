@@ -1,0 +1,80 @@
+{% extends '_base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title_content %}
+    پلن‌های اشتراک ویژه
+{% endblock %}
+
+{% block style_content %}
+    <style>
+
+        .card1:hover {
+            background: white;
+            border: 1px solid white;
+        }
+
+        .card1:hover .list-group-item {
+            background: white !important
+        }
+
+        .card1 {
+            background: #00C9FF;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <!-- page title -->
+    <section class="section section--first section--last section--head" data-bg="{% static 'img/bg.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section__wrap">
+                        <!-- section title -->
+                        <h2 class="section__title">
+                            پلن‌های اشتراک ویژه
+                        </h2>
+                        <!-- end section title -->
+
+                        <!-- breadcrumb -->
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb__item"><a href="{% url 'home:home' %}">خانه</a></li>
+                            <li class="breadcrumb__item breadcrumb__item--active">پروفایل</li>
+                        </ul>
+                        <!-- end breadcrumb -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- end page title -->
+
+    <div class="container-fluid">
+        <div class="container p-5">
+            <div class="row d-flex justify-content-center">
+                {% for plan in premiumplan_list %}
+                    <div class="col-lg-4 col-md-12 mb-4">
+                        <div class="card card1 h-100">
+                            <div class="card-body">
+
+                                <h3 class="card-title">{{ plan.name }}</h3>
+                                <small class='text-muted'>{{ plan.months_duration }}</small>
+                                <br><br><br>
+                                <span class="h2">{{ plan.price | intcomma }} تومن</span>/{{ plan.months_duration }}
+                                <br><br>
+                                <a class="d-grid my-3" href="{% url 'order:create_order' plan.pk %}">
+                                    <button class="btn btn-outline-dark btn-block">انتخاب</button>
+                                </a>
+                                <ul>
+                                    {{ plan.description | safe }}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

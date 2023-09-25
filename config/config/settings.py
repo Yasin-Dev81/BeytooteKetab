@@ -37,9 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     # local apps
     'accounts.apps.AccountsConfig',
     'book.apps.BookConfig',
+    'blog.apps.BlogConfig',
+    'home.apps.HomeConfig',
+    'order.apps.OrderConfig',
 
     # third-party app
     'ckeditor',
@@ -143,3 +147,11 @@ CKEDITOR_BASEPATH = "static/ckeditor/ckeditor/"
 # Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# zarinpal
+MERCHANT = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+ZP_API_REQUEST = "https://api.zarinpal.com/pg/v4/payment/request.json"
+ZP_API_VERIFY = "https://api.zarinpal.com/pg/v4/payment/verify.json"
+ZP_API_STARTPAY = "https://www.zarinpal.com/pg/StartPay/{authority}"
+ZP_Description = "توضیحات مربوط به تراکنش را در این قسمت وارد کنید"
+CallbackURL = 'http://127.0.0.1:8000/orders/verify/'

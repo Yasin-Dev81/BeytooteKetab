@@ -1,0 +1,214 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block title_content %}
+    مرکز راهنما
+{% endblock %}
+
+{% block content %}
+<!-- page title -->
+<section class="section section--first section--last section--head" data-bg="{% static 'img/bg.jpg' %}">
+    <div class="container">
+    <div class="row">
+        <div class="col-12">
+        <div class="section__wrap">
+            <!-- section title -->
+            <h2 class="section__title">مرکز راهنما</h2>
+            <!-- end section title -->
+
+            <!-- breadcrumb -->
+            <ul class="breadcrumb">
+            <li class="breadcrumb__item"><a href="{% url 'home:home' %}">خانه</a></li>
+            <li class="breadcrumb__item breadcrumb__item--active">مرکز راهنما</li>
+            </ul>
+            <!-- end breadcrumb -->
+        </div>
+        </div>
+    </div>
+    </div>
+</section>
+<!-- end page title -->
+
+<!-- section -->
+<section class="section section--last section--catalog">
+    <div class="container">
+    <!-- catalog -->
+{#    <div class="row catalog">#}
+        <!-- filter wrap -->
+{#        <div class="col-12 col-lg-20">#}
+{#        <div class="row">#}
+{#            <div class="col-12">#}
+            <!-- filter -->
+{#            <div class="filter">#}
+{#                <h4 class="filter__title">مرکز راهنما</h4>#}
+{##}
+{#                <div class="filter__group">#}
+{#                <input type="text" class="filter__input" placeholder="کلمه">#}
+{#                </div>#}
+{##}
+{#                <div class="filter__group">#}
+{#                <ul class="filter__nav">#}
+{#                    <li><a class="active" href="#">همه</a></li>#}
+{#                    <li><a href="#">فیلمارو</a></li>#}
+{#                    <li><a href="#">پروفایل</a></li>#}
+{#                    <li><a href="#">دسته بندی ها</a></li>#}
+{#                    <li><a href="#">پلتفرم ها</a></li>#}
+{#                    <li><a href="#">تخفیف ها</a></li>#}
+{#                    <li><a href="#">پرداخت</a></li>#}
+{#                    <li><a href="#">حذف حساب</a></li>#}
+{#                </ul>#}
+{#                </div>#}
+{#            </div>#}
+            <!-- end filter -->
+{#            </div>#}
+{#        </div>#}
+{#        </div>#}
+        <!-- end filter wrap -->
+
+        <!-- content wrap -->
+        <div class="col-12 col-lg-80">
+        <div class="row">
+            <div class="col-12 col-lg-6">
+            <div class="faq">
+                <h3 class="faq__title">فیلمارو</h3>
+                <ul class="faq__list">
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و</a></li>
+                </ul>
+            </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+            <div class="faq">
+                <h3 class="faq__title">پروفایل</h3>
+                <ul class="faq__list">
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و</a></li>
+                </ul>
+            </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+            <div class="faq">
+                <h3 class="faq__title">دسته بندی ها</h3>
+                <ul class="faq__list">
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و</a></li>
+                </ul>
+            </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+            <div class="faq">
+                <h3 class="faq__title">پلتفرم ها</h3>
+                <ul class="faq__list">
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و</a></li>
+                </ul>
+            </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+            <div class="faq">
+                <h3 class="faq__title">تخفیف ها</h3>
+                <ul class="faq__list">
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و</a></li>
+                </ul>
+            </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+            <div class="faq">
+                <h3 class="faq__title">پرداخت</h3>
+                <ul class="faq__list">
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و</a></li>
+                </ul>
+            </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+            <div class="faq">
+                <h3 class="faq__title">پرداخت</h3>
+                <ul class="faq__list">
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و</a></li>
+                </ul>
+            </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+            <div class="faq">
+                <h3 class="faq__title">پرداخت</h3>
+                <ul class="faq__list">
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و</a></li>
+                </ul>
+            </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+            <div class="faq">
+                <h3 class="faq__title">پرداخت</h3>
+                <ul class="faq__list">
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید</a></li>
+                <li><a href="#">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و</a></li>
+                </ul>
+            </div>
+            </div>
+        </div>
+        </div>
+        <!-- end content wrap -->
+    </div>
+    <!-- end catalog -->
+    </div>
+</section>
+<!-- end section -->
+
+<!-- section -->
+<div class="section section--last">
+    <div class="container">
+    <div class="row">
+        <div class="col-12">
+        <div class="partners owl-carousel">
+            {% for book in last_book %}
+                <a href="{{ book.get_absolute_url }}" class="partners__img">
+                <img src="{{ book.image.url }}" alt="" height="200">
+                </a>
+            {% endfor %}
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+<!-- end section -->
+
+{% endblock %}

@@ -10,26 +10,6 @@ from .models import Book, Category, BookComment
 from .forms import BookCommentForm
 
 
-class HomeView(View):
-    template_name = 'book/home.html'
-    counte_each = 4
-
-    def setup(self, request, *args, **kwargs):
-        self.best_books = sorted(Book.objects.all(), key=lambda t: int(t.like_count)*(-1))[:self.counte_each]
-        self.last_books = Book.objects.all().order_by('-datetime_created')[:self.counte_each*2]
-        return super().setup(request, *args, **kwargs)
-
-    def get(self, request):
-        return render(
-            request,
-            self.template_name,
-            context={
-                'best_book': self.best_books,
-                'last_book': self.last_books
-            }
-        )
-
-
 class BookDetailView(View):
     model = Book
     template_name = 'book/detail.html'
@@ -38,7 +18,7 @@ class BookDetailView(View):
     def setup(self, request, *args, **kwargs):
         self.book = get_object_or_404(self.model, pk=kwargs['pk'])
         self.comments = self.book.book_comments.filter(is_pub=True)
-        self.category = Category.objects.get(pk=self.book.category.pk).book_categories.all()
+        self.category = Category.objects.get(pk=self.book.category.pk).book_categories.order_by('?')[:4]
         self.is_fav = False
         if request.user.is_authenticated:
             self.is_fav = self.book.favorites.filter(pk=request.user.pk).exists()
@@ -79,4 +59,13 @@ class BookListView(generic.ListView):
     def get_context_data(self, *args, **kwargs):
         context = super(BookListView, self).get_context_data(*args, **kwargs)
         context['category_list'] = Category.objects.all()
+        context['filter'] = self.request.GET.get('filter', 'give-default-value')
+        context['orderby'] = self.request.GET.get('orderby', '-datetime_created')
         return context
+
+    def get_queryset(self):
+        # filter_val = self.request.GET.get('filter', 'give-default-value')
+        order = self.request.GET.get('orderby', '-datetime_created')
+        print(order)
+        new_context = Book.objects.all().order_by(order)
+        return new_context

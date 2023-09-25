@@ -37,7 +37,7 @@ class Book(models.Model):
     premium_required = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ('title',)
+        ordering = ('-datetime_created',)
 
     def __str__(self):
         return self.title
