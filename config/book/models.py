@@ -25,11 +25,14 @@ class Book(models.Model):
 
     title = models.CharField(max_length=200, null=False, blank=False)
     slug = models.SlugField(max_length=200, unique=True)
+    publisher = models.CharField(max_length=300, blank=True, null=True)
+    writer = models.CharField(max_length=200)
+    page_count = models.IntegerField(null=True, blank=True)
+    isbn = models.CharField(max_length=13, null=True, blank=True)
     description = RichTextField()
 
     langs = models.ManyToManyField('Lang', related_name='book_langs')
 
-    writer = models.CharField(max_length=200)
     image = models.ImageField()
 
     datetime_created = models.DateTimeField(auto_now_add=True)
@@ -76,3 +79,20 @@ class BookComment(models.Model):
 
     def get_absolute_url(self):
         return reverse('book:book_detail', args=[self.book.pk, self.book.slug])
+
+
+class BookFile(models.Model):
+    book = models.ForeignKey('Book', on_delete=models.CASCADE, related_name="book_files")
+    file = models.FileField()
+
+    Formats = (
+        ('e', 'EPUB'),
+        ('p', 'PDF')
+    )
+    format = models.CharField(choices=Formats, max_length=1)
+
+    def __str__(self):
+        return f"{self.format} - {self.book.title}"
+
+    def t_format(self):
+        return dict(self.Formats)[self.format]

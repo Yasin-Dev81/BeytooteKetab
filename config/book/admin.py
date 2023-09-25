@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Book, Lang, BookComment
+from .models import Category, Book, Lang, BookComment, BookFile
 
 
 @admin.register(Category)
@@ -58,4 +58,20 @@ class BookCommentAdmin(admin.ModelAdmin):
     raw_id_fields = [
         'book',
         'author',
+    ]
+
+
+@admin.register(BookFile)
+class BookFileAdmin(admin.ModelAdmin):
+    list_display = [
+        '__str__'
+    ]
+    search_fields = [
+        'book'
+    ]
+    list_filter = ['book']
+    ordering = ['book']
+
+    raw_id_fields = [
+        'book',
     ]
