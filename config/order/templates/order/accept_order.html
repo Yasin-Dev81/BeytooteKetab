@@ -1,6 +1,6 @@
 {% extends 'accounts/_base.html' %}
 {% load humanize %}
-
+{% load order_tags %}
 
 {% block title_content %}
     تایید خرید
@@ -8,23 +8,35 @@
 
 {% block content %}
     <form class="loginfrm">
-        <h3 class="details__title" dir="auto">پلن: {{ plan }}</h3>
-        <ul class="details__list">
-        <li><span class="h5">قیمت:
-                {{ plan.price | intcomma }}
-            <span class="badge badge-warning text-dark">
-                تومن
-            </span>
-        </span></li>
-        <li><span>مدت زمان اشتراک:</span> {{ plan.months_duration }} </li>
-        </ul>
+        <h1 class="details__title" dir="auto">
+            <b>
+            پلن {{ plan }}
+            </b>
+        </h1>
     </form>
     <br>
-    <form action="" method="post" class="loginfrm">
+    <form class="loginfrm" method="post" action="">
         {% csrf_token %}
+        <h4 class="details__title">((پرداخت با IDPay))</h4>
+        <span class="details__cart-title">قیمت</span>
+        <div class="details__price">
+            <span>{{ plan.price | intcomma }} تومن</span>
+            <s>{{ plan.price | intcomma }}</s><b>0% تخفیف</b>
+        </div>
+        <input class="sign__btn" type="submit" value="رفتن به درگاه پرداخت">
+    </form>
+    <br>
+    <form class="loginfrm">
+        <h4 class="details__title">((پرداخت با کارت به کارت))</h4>
+        <h5 class="details__cart-title" dir="auto">telegram-id: @yasin_dev81</h5>
+        <span class="details__cart-title">قیمت</span>
+        <div class="details__price">
+            <span>{{ plan.price | discount_kart | intcomma }} تومن</span>
+            <s>{{ plan.price | intcomma }}</s><b>25% تخفیف</b>
+        </div>
+        <a class="sign__btn footer__link" type="submit" href="tel:@yasin_dev81"> رفتن به تلگرام </a>
         <div class="row justify-content-center text-center">
-            <input class="page-404__btn mx-2" type="submit" value="پرداخت با زرین‌پال">
-            <a class="btn btn-outline-danger" href="{% url 'order:premium_plans' %}">بازگشت</a>
+            <a href="{% url 'order:premium_plans' %}" class="btn btn-outline-danger"> بازگشت </a>
         </div>
     </form>
 {% endblock %}

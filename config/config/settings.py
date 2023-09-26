@@ -155,3 +155,6 @@ ZP_API_VERIFY = "https://api.zarinpal.com/pg/v4/payment/verify.json"
 ZP_API_STARTPAY = "https://www.zarinpal.com/pg/StartPay/{authority}"
 ZP_Description = "توضیحات مربوط به تراکنش را در این قسمت وارد کنید"
 CallbackURL = 'http://127.0.0.1:8000/orders/verify/'
+
+# kaveh negar
+KN_api = "527949654A4E527773594E3134453375646D68744F626265435A766D50536762634145727555776F4C42413D"

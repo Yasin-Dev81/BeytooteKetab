@@ -33,7 +33,7 @@ class UserRegisterView(View):
                 'full_name': form.cleaned_data['full_name'],
                 'password': form.cleaned_data['password1'],
             }
-            messages.success(request, 'we sent you a code', 'success')
+            messages.success(request, f"کد به {form.cleaned_data['phone']} ارسال شد", 'success')
             return redirect('accounts:verify_code')
         return render(request, self.template_name, {'form': form})
 

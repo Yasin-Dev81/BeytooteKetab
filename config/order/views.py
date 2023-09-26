@@ -58,7 +58,7 @@ class OrderCreateView(LoginRequiredMixin, View):
         return redirect(reverse('order:pay_order', args=(order.pk,)))
 
 
-class OrderPayView(LoginRequiredMixin, View):
+class ZPOrderPayView(LoginRequiredMixin, View):
     def get(self, request, order_id):
         order = get_object_or_404(PremiumOrder, pk=order_id)
 
@@ -89,6 +89,11 @@ class OrderPayView(LoginRequiredMixin, View):
             request.session['order_pay'] = {}
             # return HttpResponse(f"Error code: {e_code}, Error Message: {e_message}")
             return redirect(reverse("order:premium_plans"))
+
+
+class IDPOrderPayView(LoginRequiredMixin, View):
+    def get(self, request, order_id):
+        pass
 
 
 class OrderVerifyView(LoginRequiredMixin, View):
