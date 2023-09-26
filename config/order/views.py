@@ -91,11 +91,6 @@ class ZPOrderPayView(LoginRequiredMixin, View):
             return redirect(reverse("order:premium_plans"))
 
 
-class IDPOrderPayView(LoginRequiredMixin, View):
-    def get(self, request, order_id):
-        pass
-
-
 class OrderVerifyView(LoginRequiredMixin, View):
     def get(self, request):
         order_id = request.session['order_pay']['order_id']

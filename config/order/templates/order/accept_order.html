@@ -17,13 +17,13 @@
     <br>
     <form class="loginfrm" method="post" action="">
         {% csrf_token %}
-        <h4 class="details__title">((پرداخت با IDPay))</h4>
+        <h4 class="details__title">((پرداخت با زرین‌پال))</h4>
         <span class="details__cart-title">قیمت</span>
         <div class="details__price">
             <span>{{ plan.price | intcomma }} تومن</span>
             <s>{{ plan.price | intcomma }}</s><b>0% تخفیف</b>
         </div>
-        <input class="sign__btn" type="submit" value="رفتن به درگاه پرداخت">
+        <input class="sign__btn" type="submit" value="رفتن به درگاه پرداخت" disabled>
     </form>
     <br>
     <form class="loginfrm">
