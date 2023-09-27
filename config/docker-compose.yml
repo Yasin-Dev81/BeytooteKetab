@@ -1,0 +1,13 @@
+services:
+  django:
+    image: beytoote:1.1.1
+    container_name: beytoote
+    build: .
+    env_file:
+      - .env
+#    command: sh -c "gunicorn config.wsgi -b 0.0.0.0:8000"
+    expose:
+      - "8000"
+    restart: always
+    ports:
+      - "8000:8000"
