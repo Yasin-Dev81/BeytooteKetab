@@ -11,25 +11,27 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# env
+load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-3h-p1f0g&==xfd)k&h)mhe+m_n7&klhg6pmas&j@mt^^l!&kxs'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DJANGO_DEBUG')
 
-ALLOWED_HOSTS = ['*']
-
+ALLOWED_HOSTS = [os.getenv('DJANGO_HOST')]
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -128,10 +130,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-# STATIC_ROOT = './static/'
-STATICFILES_DIRS = [
-    BASE_DIR / 'static'
-]
+STATIC_ROOT = './static/'
+# STATICFILES_DIRS = [
+#     BASE_DIR / 'static',
+# ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -149,12 +151,10 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 # zarinpal
-MERCHANT = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXX'
-ZP_API_REQUEST = "https://api.zarinpal.com/pg/v4/payment/request.json"
-ZP_API_VERIFY = "https://api.zarinpal.com/pg/v4/payment/verify.json"
-ZP_API_STARTPAY = "https://www.zarinpal.com/pg/StartPay/{authority}"
-ZP_Description = "توضیحات مربوط به تراکنش را در این قسمت وارد کنید"
-CallbackURL = 'http://127.0.0.1:8000/orders/verify/'
+MERCHANT = os.getenv('ZP_MERCHANT')
+
+ZP_Description = os.getenv('ZP_Description')
+CallbackURL = os.getenv('ZP_CallbackURL')
 
 # kaveh negar
-KN_api = "527949654A4E527773594E3134453375646D68744F626265435A766D50536762634145727555776F4C42413D"
+KN_api = os.getenv('KN_API')

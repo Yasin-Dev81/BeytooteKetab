@@ -1,5 +1,4 @@
-from config.settings import MERCHANT, ZP_API_REQUEST, ZP_API_VERIFY, \
-    ZP_API_STARTPAY, ZP_Description, CallbackURL
+from config.settings import MERCHANT, ZP_Description, CallbackURL
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View, generic
@@ -12,6 +11,10 @@ import requests
 import json
 
 from .models import PremiumOrder, PremiumPlan
+
+ZP_API_REQUEST = "https://api.zarinpal.com/pg/v4/payment/request.json"
+ZP_API_VERIFY = "https://api.zarinpal.com/pg/v4/payment/verify.json"
+ZP_API_STARTPAY = "https://www.zarinpal.com/pg/StartPay/{authority}"
 
 
 class ProfileView(LoginRequiredMixin, View):
@@ -121,7 +124,8 @@ class OrderVerifyView(LoginRequiredMixin, View):
                     messages.success(request, "تراکنش ارسال شده %s" % str(req.json()['data']['message']))
                 else:
                     # return HttpResponse('Transaction failed.\nStatus: ' + str(req.json()['data']['message']))
-                    messages.error(request, "Transaction failed.\nStatus: " + str(req.json()['data']['message']), "danger")
+                    messages.error(request, "Transaction failed.\nStatus: " + str(req.json()['data']['message']),
+                                   "danger")
             else:
                 e_code = req.json()['errors']['code']
                 e_message = req.json()['errors']['message']
