@@ -6,6 +6,7 @@ charset-normalizer==3.2.0
 Django==4.2.5
 django-ckeditor==6.7.0
 django-js-asset==2.1.0
+django-storages==1.14
 gunicorn==21.2.0
 idna==3.4
 jmespath==1.0.1

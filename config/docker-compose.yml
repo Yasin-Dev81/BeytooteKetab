@@ -1,6 +1,6 @@
 services:
   django:
-    image: beytoote:1.1.1
+    image: beytoote:1.1.2
     container_name: beytoote
     build: .
     env_file:

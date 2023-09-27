@@ -1,7 +1,7 @@
 FROM python:3.11.5-bookworm
 
 LABEL maintainer="yasin-dev81.ir"
-LABEL version="1.1.1"
+LABEL version="1.1.2"
 
 WORKDIR /code
 
