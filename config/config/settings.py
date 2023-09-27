@@ -158,3 +158,13 @@ CallbackURL = os.getenv('ZP_CallbackURL')
 
 # kaveh negar
 KN_api = os.getenv('KN_API')
+
+# ARVAN CLOUD STORAGE
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_ACCESS_KEY_ID = os.getenv('AC_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('AC_SECRET_ACCESS_KEY')
+AWS_S3_ENDPOINT_URL = os.getenv('AC_S3_ENDPOINT_URL')
+AWS_STORAGE_BUCKET_NAME = os.getenv('AC_STORAGE_BUCKET_NAME')
+AWS_SERVICE_NAME = 's3'
+AWS_S3_FILE_OVERWRITE = False
+AWS_LOCAL_STORAGE = f'{BASE_DIR}/aws/'
